@@ -56,7 +56,7 @@ namespace Battleship.Logica
 
         public void Mover(int x, int y)
         {
-            for (int i = 0; i < form.Length; i++)
+            for (int i = 0; i < (form.Length/2); i++)
             {
                 form[i, 0] += x;
                 form[i, 1] += y;
@@ -153,9 +153,13 @@ namespace Battleship.Logica
 
         public Image GetImage()
         {
-            if (size < form.Length)
+
+            if (size < ((form.Length/2)-1))
             {
                 size++;
+            } else if (size == ((form.Length / 2) - 1) && size != 0)
+            {
+                size = 0;
             }
             return ShipImg[size];
         }

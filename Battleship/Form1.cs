@@ -26,6 +26,8 @@ namespace Battleship
         private Comprobador cbp= new Comprobador();
         private Panel panelactual;
         protected int status = 0;
+        int Ax = 0;
+        int Ay = 0;
         private int idx = 0;
         public Form1()
         {
@@ -97,6 +99,13 @@ namespace Battleship
                         status = 1;
                         idx = 0;
                     }
+                } else if (status == 1)
+                {
+
+                } else if (status == 2)
+                {
+                    gen.getMovement(barco, Ax, Ay);
+                    status = 1;
                 }
                /* int porcentaje = gen.CheckPolvo();
                 JLprc.setText(String.valueOf(porcentaje) + "%");
@@ -138,16 +147,24 @@ namespace Battleship
             {
 
                 case 'w':
-                    barco.Mover(0, 1);
+                    Ax = 0;
+                    Ay = -1;
+                    status = 2;
                     break;
                 case 'a':
-                    barco.Mover(-1, 0);
+                    Ax = -1;
+                    Ay = 0;
+                    status = 2;
                     break;
                 case 's':
-                    barco.Mover(0, -1);
+                    Ax = 0;
+                    Ay = 1;
+                    status = 2; 
                     break;
                 case 'd':
-                    barco.Mover(1, 0);
+                    Ax = 1;
+                    Ay = 0;
+                    status = 2; 
                     break;
                 case ' ':
                     if (status == 0 || status == 1)

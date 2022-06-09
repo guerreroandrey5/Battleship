@@ -34,10 +34,24 @@ namespace Battleship.Logica.Negociacion
                 for (int j = 0; j <= ship.getFormaAct().GetLength(1); j++)
                 {
                     
-                    board.setLabel(i,j, panel, "Barco", ship );
+                    board.setLabel(i,j, null, "Barco", ship );
                 }
             }
             }
+
+        public void getMovement(Ship ship, int x, int y)
+        {
+            for (int i = 0; i < ship.getFormaAct().GetLength(0); i++)
+            {
+                for (int j = 0; j < ship.getFormaAct().GetLength(1); j++)
+                {
+                    board.setLabel(i, j, null,  "Repintar", ship);
+                }
+            }
+            
+            ship.Mover(x,y);
+            setBarco(ship,null);
+        }
 
         public int getT()
         {

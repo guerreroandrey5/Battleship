@@ -51,7 +51,7 @@ namespace Battleship.Logica.Objetos
             return formas[idn];
         }
 
-        public Panel GenerarCampo(Panel panel)
+        public Panel GenerarCampo(Panel panel = null)
         {
             for (int i = 0; i < campo.GetLength(0); i++)
             {
@@ -70,10 +70,12 @@ namespace Battleship.Logica.Objetos
             switch (status)
             {
                 case "Mar":
-                    campo[x, y] = new Label();
-                    campo[x, y].Text = status;
+                    if (panel != null)
+                    {
+                        campo[x, y] = new Label();
+                    }
                     campo[x, y].Image = (Image)imgMgnt.ResizeImage(Image.FromFile(@"C:\Users\Cris\Downloads\mar.png"), 50, 50);
-                    campo[x,y].Text = " ";
+
                     break;
 
                 case "Barco":
@@ -88,12 +90,28 @@ namespace Battleship.Logica.Objetos
                             }
                     }
                     
-                    return panel;
+                    break;
+                case "Repintar":
+                    int[,] ind = { { x, y } };
+                    //campo[x][y].setIcon(controlIMG.getScaledImage(new ImageIcon("E:/Codigo U/Programacion 2/LP2.1-Robot/dust.png"), 50, 50));
+
+                    for (int i = 0; i < shp.getFormaAct().GetLength(0); i++)
+                    {
+                        if (shp.getFormaAct()[i, 0] == ind[0, 0] && shp.getFormaAct()[i, 1] == ind[0, 1])
+                        {
+                            campo[x, y].Image = (Image)imgMgnt.ResizeImage(Image.FromFile(@"C:\Users\Cris\Downloads\mar.png"), 50, 50);
+
+                        }
+                    }
+
                     break;
             }
+            if(panel != null)
+            {
+                campo[x, y].SetBounds(x * 50, y * 50, 50, 50);
+                panel.Controls.Add(campo[x, y]);
+            }
             
-            campo[x, y].SetBounds(x * 50, y * 50, 50, 50);
-            panel.Controls.Add(campo[x, y]);
 
             return panel;
         }
