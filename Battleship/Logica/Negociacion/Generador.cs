@@ -1,0 +1,47 @@
+﻿using Battleship.Logica.Objetos;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace Battleship.Logica.Negociacion
+{
+    internal class Generador
+    {
+        private Board board  = new Board();
+        
+
+        public Label[,] generarJuego(Panel panel, int cond)
+        {
+            panel = board.GenerarCampo(panel);
+            Label[,] campo = board.getCampo();
+            return campo;
+        }
+
+        public Ship generarBarcos(Panel panel, int idx)
+        {
+            Ship ship = new Ship(board.getImages(idx),board.getForma(idx), board.getForma(idx));
+            board.setBarco(ship);
+            return ship;
+        }
+
+        public void setBarco(Ship ship, Panel panel)
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          {
+            for (int i = 0; i <= ship.getFormaAct().GetLength(0); i++)
+            {
+                for (int j = 0; j <= ship.getFormaAct().GetLength(1); j++)
+                {
+                    
+                    board.setLabel(i,j, panel, "Barco", ship );
+                }
+            }
+            }
+
+        public int getT()
+        {
+            return board.getBarcosTam();
+        }
+    }
+}

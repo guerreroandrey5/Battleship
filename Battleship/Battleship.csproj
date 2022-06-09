@@ -52,6 +52,11 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Logica\Negociacion\Comprobador.cs" />
+    <Compile Include="Logica\Negociacion\Generador.cs" />
+    <Compile Include="Logica\Negociacion\ImagenManagment.cs" />
+    <Compile Include="Logica\Objetos\Board.cs" />
+    <Compile Include="Logica\Objetos\Ship.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
