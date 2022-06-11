@@ -84,5 +84,19 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Imagenes\4047324-boat-boats-cruise-summer-transportation-vacation-yacht_113536.png" />
+    <Content Include="Imagenes\navy-ships-silhouette-green-ship-by-Vexels.png" />
+    <Content Include="Imagenes\navy-ships-silhouette-vessel-by-Vexels.png" />
+    <Content Include="Imagenes\PA1.png" />
+    <Content Include="Imagenes\PA2.png" />
+    <Content Include="Imagenes\PA3.png" />
+    <Content Include="Imagenes\PA4.png" />
+    <Content Include="Imagenes\PA5.png" />
+    <Content Include="Imagenes\PA6.png" />
+    <Content Include="Imagenes\pngegg.png" />
+    <Content Include="Imagenes\pngwing.com %281%29.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

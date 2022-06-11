@@ -16,8 +16,8 @@ namespace Battleship.Logica
         private int[,] pos;
         private int[,] form;
         private int[,] formIni;
-        private int rotation;
         public int size = -1;
+        private int rotation = 0;
         private bool setd = false;
         public bool Setd
         {
@@ -63,15 +63,22 @@ namespace Battleship.Logica
             }
         }
 
+        public int getOri()
+        {
+            return rotation;
+        }
+        public void setOri(int o)
+        {
+            this.rotation = o;
+        }
+
         public void rotate(int rot, int frm)
         {
             switch (rot)
             {
                 case 0:
-                    for (int i = 0; i < form.GetLength(0); i++)
-                    {
-                        form = formIni;
-                    }
+                    
+                    form = formIni;
                     break;
                 case 90:
                     rotate(0, 0);
@@ -80,28 +87,33 @@ namespace Battleship.Logica
                         int value = form[0, 0];
                         form[0, 0] = form[0, 1];
                         form[0, 1] = value;
-                    } else
-                    {
-                    for (int i = 0; i < form.GetLength(0); i++)
-                    {
-                        int value1 = 2;
-                        int value2 = form[i, 1];
-                        if (frm == 5)
-                        {
-                            if ((value1 == 2 && value2 == 2) || (value1 == 0 && value2 == 2))
-                            {
-                                value1 -= 1;
-                                value2 -= 1;
-                                if (value1 < 0)
-                                {
-                                    value1 = 0;
-                                }
-                            }
-                        }
-                        form[i, 0] = value2;
-                        form[i, 1] = value1;
-
                     }
+                    else if (frm == 5)
+                    {
+                        int[,] val = { { form[1,0], form[1,1] } };
+                        form[1, 0] = form[2, 0];
+                        form[1, 1] = form[2, 1];
+                        form[2, 0] = form[4, 0];
+                        form[2, 1] = form[4, 1];
+                        form[4, 0] = form[3, 0];
+                        form[4, 1] = form[3, 1];
+                        form[3, 0] = val[0, 0];
+                        form[3, 1] = val[0, 1];
+                        form[0,0] = 2;
+                        form[0, 1] = 3;
+                        form[5, 0] = 1;
+                        form[5, 1] = 0;
+                    }
+                    else
+                    {
+                        for (int i = 0; i < form.GetLength(0); i++)
+                        {
+                            int value1 = 2;
+                            int value2 = form[i, 1];
+                            form[i, 0] = value2;
+                            form[i, 1] = value1;
+
+                        }
                     }
                     break;
                 case 180:

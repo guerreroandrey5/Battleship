@@ -29,7 +29,7 @@ namespace Battleship.Logica.Objetos
             int[,] array3 = { { 0, 1 }, { 1, 1 },{1,2 }, { 2, 1 } };
             int[,] array4 = { { 0, 1 }, { 1, 1 }, { 2, 1 }, {3,1 } };
             int[,] array5 = { { 0, 1 }, { 1, 1 }, { 2, 1 }, { 3, 1 }, {4,1 } };
-            int[,] array6 = { { 0, 1 }, { 1, 1 }, { 2, 1 }, { 1, 0 }, { 2, 0 } , { 3, 0 } };
+            int[,] array6 = { { 0, 2 }, { 1, 2 }, { 2, 2 }, { 1, 1 }, { 2, 1 } , { 3, 1 } };
             //string[] imagen1 = { 'C:\Users\Cris\Downloads\mar.png' };
             //string[,] imagen2 = { { 0, 1 }, { 1, 1 }, { 2, 1 } };
             string[] imagen6 = { "PA1", "PA4", "PA2", "PA5", "PA3", "PA6" };

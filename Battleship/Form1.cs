@@ -106,6 +106,26 @@ namespace Battleship
                 {
                     gen.getMovement(barco, Ax, Ay);
                     status = 1;
+                } else if(status == 3)
+                {
+                    int rot = 0;
+                    switch (barco.getOri())
+                    {
+                        case 0:
+                            rot = 90;
+                            break;
+                        case 90:
+                            rot = 180;
+                            break;
+                        case 180:
+                            rot = 270;
+                            break;
+                        case 270:
+                            rot = 0;
+                            break;
+                    }
+                    gen.Rotate(barco, rot);
+                    status = 1;
                 }
                /* int porcentaje = gen.CheckPolvo();
                 JLprc.setText(String.valueOf(porcentaje) + "%");
@@ -165,6 +185,10 @@ namespace Battleship
                     Ax = 1;
                     Ay = 0;
                     status = 2; 
+                    break;
+                case 'r':
+                    
+                    status = 3;
                     break;
                 case ' ':
                     if (status == 0 || status == 1)
