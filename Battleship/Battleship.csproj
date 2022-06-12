@@ -87,6 +87,7 @@
   <ItemGroup />
   <ItemGroup>
     <Content Include="Imagenes\4047324-boat-boats-cruise-summer-transportation-vacation-yacht_113536.png" />
+    <Content Include="Imagenes\mar.png" />
     <Content Include="Imagenes\navy-ships-silhouette-green-ship-by-Vexels.png" />
     <Content Include="Imagenes\navy-ships-silhouette-vessel-by-Vexels.png" />
     <Content Include="Imagenes\PA1.png" />
