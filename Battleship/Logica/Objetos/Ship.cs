@@ -14,6 +14,7 @@ namespace Battleship.Logica
         private Image[] ShipImg;
         private string[] imgRL;
         private int[,] pos;
+        private bool move = true;
         private int[,] form;
         private int[,] formIni;
         public int size = -1;
@@ -41,7 +42,7 @@ namespace Battleship.Logica
                 this.ShipImg[i] = Image.FromFile(filePath + @"\Imagenes\" + url + ".png");
                 
             }
-
+            this.pos = frm;
             this.form = frm;
             this.formIni = frm;
         }
@@ -62,7 +63,20 @@ namespace Battleship.Logica
             {
                 form[i, 0] += x;
                 form[i, 1] += y;
+                if (form[i,0] < 0 || form[i,1 ] < 0){
+                    move = false;
+                    form = pos;
+                    break;
+                } else
+                {
+                    move = true;
+                    form = pos;
+                }
             }
+        }
+
+        public bool isMoving_(){
+            return move;
         }
 
         public int getOri()
