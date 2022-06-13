@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +18,7 @@ namespace Battleship.Logica.Objetos
         protected static string[][] imagesS = new string[6][];
         private ImagenManagment imgMgnt = new ImagenManagment();
         private int[][,] formas = new int[6][,];
+        string filePath = Environment.CurrentDirectory;
         public Board()
         {
             setformas();
@@ -65,7 +67,7 @@ namespace Battleship.Logica.Objetos
         }
 
         public Panel setLabel(int x, int y, Panel panel, String status, Ship shp)
-        { //Coloca los label eb el panel de juego
+        { //Coloca los labels en el panel de juego
             
             switch (status)
             {
@@ -73,9 +75,10 @@ namespace Battleship.Logica.Objetos
                     if (panel != null)
                     {
                         campo[x, y] = new Label();
-                    }
-                    campo[x, y].Image = (Image)imgMgnt.ResizeImage(Image.FromFile(@"C:\Users\Cris\Downloads\mar.png"), 50, 50);
-
+                    }                   
+                    Console.WriteLine(filePath);
+                    campo[x, y].Image = (Image)imgMgnt.ResizeImage(Image.FromFile(filePath + @"\Imagenes\mar.png"), 50, 50);
+                    //campo[x, y].Image = (Image)imgMgnt.ResizeImage(Image.FromFile(@"C:\Users\Cris\Downloads\mar.png"), 50, 50);              
                     break;
 
                 case "Barco":
@@ -99,8 +102,8 @@ namespace Battleship.Logica.Objetos
                     {
                         if (shp.getFormaAct()[i, 0] == ind[0, 0] && shp.getFormaAct()[i, 1] == ind[0, 1])
                         {
-                            campo[x, y].Image = (Image)imgMgnt.ResizeImage(Image.FromFile(@"C:\Users\Cris\Downloads\mar.png"), 50, 50);
-
+                            //campo[x, y].Image = (Image)imgMgnt.ResizeImage(Image.FromFile(@"C:\Users\Cris\Downloads\mar.png"), 50, 50);
+                            campo[x, y].Image = (Image)imgMgnt.ResizeImage(Image.FromFile(filePath + @"\Imagenes\mar.png"), 50, 50);
                         }
                     }
 

@@ -36,10 +36,12 @@ namespace Battleship.Logica
             ShipImg = new Image[imgRL.Length];
             for (int i = 0; i < imgRL.Length; i++)
             {
+                string filePath = Environment.CurrentDirectory;
                 string url = imgRL[i];
-                this.ShipImg[i] = Image.FromFile(@"C:\Users\Cris\Downloads\Nueva carpeta (3)\" + url + ".png");
+                this.ShipImg[i] = Image.FromFile(filePath + @"\Imagenes\" + url + ".png");
+                
             }
-            
+
             this.form = frm;
             this.formIni = frm;
         }

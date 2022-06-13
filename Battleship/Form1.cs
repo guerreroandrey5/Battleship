@@ -7,7 +7,9 @@ using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
+using System.Media;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -26,6 +28,7 @@ namespace Battleship
         private Comprobador cbp= new Comprobador();
         private Panel panelactual;
         protected int status = 0;
+        string filePath = Environment.CurrentDirectory;
         int Ax = 0;
         int Ay = 0;
         private int idx = 0;
@@ -208,6 +211,30 @@ namespace Battleship
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            using (var soundPlayer = new SoundPlayer(filePath + @"\Sounds\hit.wav"))
+            {
+                soundPlayer.Play(); // can also use soundPlayer.PlaySync()
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            using (var soundPlayer = new SoundPlayer(filePath + @"\Sounds\pium.wav"))
+            {
+                soundPlayer.Play(); // can also use soundPlayer.PlaySync()
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            using (var soundPlayer = new SoundPlayer(filePath + @"\Sounds\explosion.wav"))
+            {
+                soundPlayer.Play(); // can also use soundPlayer.PlaySync()
+            }
         }
     }
 
