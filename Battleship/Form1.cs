@@ -90,7 +90,7 @@ namespace Battleship
             {
                 if(status == 0)
                 {
-                    barco = gen.generarBarcos(panelactual, /*idx*/5);
+                    barco = gen.generarBarcos(panelactual, /*idx*/2);
                     panelactual = panel1;
                     
                     if (!cbp.getCondS(barco) && idx < barco.getBarcosTam())

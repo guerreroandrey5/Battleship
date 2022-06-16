@@ -22,50 +22,54 @@ namespace Battleship.Logica.Negociacion
 
         public Ship generarBarcos(Panel panel, int idx)
         {
-            Ship ship = new Ship(board.getImages(idx),board.getForma(idx), board.getForma(idx));
+            
+            Ship ship = new Ship(board.getImages(idx, 0),board.getForma(idx), board.getForma(idx), idx);
             board.setBarco(ship);
             return ship;
         }
 
         public void setBarco(Ship ship, Panel panel)
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           {
-            for (int i = 0; i <= ship.getFormaAct().GetLength(0); i++)
+            for (int i = 0; i < ship.getFormaAct().GetLength(0); i++)
             {
-                for (int j = 0; j <= ship.getFormaAct().GetLength(1); j++)
-                {
-                    
-                    board.setLabel(i,j, null, "Barco", ship );
-                }
+                int x = ship.getFormaAct()[i,0];
+                int y = ship.getFormaAct()[i, 1];
+                board.setLabel(x,y, null, "Barco", ship );
             }
             }
 
         public void getMovement(Ship ship, int x, int y)
         {
-            for (int i = 0; i < ship.getFormaAct().GetLength(0); i++)
+            for (int i = 0; i < 10; i++)
             {
-                for (int j = 0; j < ship.getFormaAct().GetLength(1); j++)
+                for (int j = 0; j < 10; j++)
                 {
                     board.setLabel(i, j, null,  "Repintar", ship);
                 }
             }
             
             ship.Mover(x,y);
-           // if (ship.isMoving_())
-           // {
-                setBarco(ship, null);
-            //}
+            if (ship.isMoving_())
+            {
+                ship.setPos(ship.getFormaAct());
+            } else
+            {
+                ship.setFormaAct(ship.getPos());
+            }
+
+            setBarco(ship, null);
         }
 
         public void Rotate(Ship ship, int rot)
         {
-            for (int i = 0; i < ship.getFormaAct().GetLength(0); i++)
+            
+            for (int i = 0; i < 10; i++)
             {
-                for (int j = 0; j < ship.getFormaAct().GetLength(1); j++)
+                for (int j = 0; j < 10; j++)
                 {
                     board.setLabel(i, j, null, "Repintar", ship);
                 }
             }
-            ship.setOri(rot);
             int Sbarco = ((ship.getFormaAct().Length / 2) - 1);
             if (Sbarco == 5)
             {
@@ -74,6 +78,8 @@ namespace Battleship.Logica.Negociacion
                     rot = 0;
                 } 
             }
+
+            ship.setOri(rot);
             ship.rotate(rot, Sbarco);
             setBarco(ship, null);
         }

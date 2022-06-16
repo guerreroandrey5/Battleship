@@ -12,8 +12,8 @@ namespace Battleship.Logica
     internal class Ship : Board
     {
         private Image[] ShipImg;
-        private string[] imgRL;
         private int[,] pos;
+        private int NBarco;
         private bool move = true;
         private int[,] form;
         private int[,] formIni;
@@ -32,19 +32,15 @@ namespace Battleship.Logica
         {
         }
 
-        public Ship(string[] imgRL, int[,] pos, int[,] frm)
+        public Ship(string[] imgRL, int[,] pos, int[,] frm, int numB)
         {
-            ShipImg = new Image[imgRL.Length];
-            for (int i = 0; i < imgRL.Length; i++)
-            {
-                string filePath = Environment.CurrentDirectory;
-                string url = imgRL[i];
-                this.ShipImg[i] = Image.FromFile(filePath + @"\Imagenes\" + url + ".png");
-                
-            }
-            this.pos = frm;
-            this.form = frm;
-            this.formIni = frm;
+            this.NBarco = numB;
+            setSIGs( imgRL );
+            this.formIni = new int[frm.GetLength(0), frm.GetLength(1)];
+            Array.Copy(frm, 0, formIni, 0, frm.Length);
+            setFormaAct(frm.Clone() as int[,]);
+
+
         }
 
         public bool checkSet()
@@ -52,27 +48,67 @@ namespace Battleship.Logica
             return setd;
         }
 
+        private void setSIGs(string[] imgRL)
+        {
+            ShipImg = new Image[imgRL.Length];
+            for (int i = 0; i < imgRL.Length; i++)
+            {
+                string filePath = Environment.CurrentDirectory;
+                string url = imgRL[i];
+                this.ShipImg[i] = Image.FromFile(filePath + @"\Imagenes\" + url + ".png");
+
+            }
+        }
+
         public int[,] getFormaAct()
         {
             return form;
         }
+        public void setFormaAct(int[,] Fpos)
+        {
+            this.form = Fpos;
+        }
 
         public void Mover(int x, int y)
         {
-            for (int i = 0; i < (form.Length/2); i++)
+            int[] movimientos = new int[form.Length];
+            for (int i = 0; i < (form.GetLength(0)); i++)
+            {
+                int tf = form[i, 0] + x;
+                int td = form[i, 1] + y;
+                movimientos[i] = tf;
+                movimientos[i+1] = td;
+                i++;
+            }
+            if(Array.Exists(movimientos, element => element == -1) || Array.Exists(movimientos, element => element == 9))
+            {
+                move = false;
+            } else
+            {
+                move = true;
+                moverBarco(x, y);
+            }
+        }
+
+        private void moverBarco(int x, int y)
+        {
+            for (int i = 0; i < (form.GetLength(0)); i++)
             {
                 form[i, 0] += x;
                 form[i, 1] += y;
-                if (form[i,0] < 0 || form[i,1 ] < 0){
-                    move = false;
-                    form = pos;
-                    break;
-                } else
-                {
-                    move = true;
-                    form = pos;
-                }
+                formIni[i, 0] += x;
+                formIni[i, 1] += y;
             }
+        }
+
+        public void setPos(int[,] Ffrm)
+        {
+            this.pos = Ffrm;
+        }
+
+        public int[,] getPos()
+        {
+            return this.pos;
         }
 
         public bool isMoving_(){
@@ -87,24 +123,32 @@ namespace Battleship.Logica
         {
             this.rotation = o;
         }
+        public void setFOri()
+        {
+            Array.Copy(form, 0, formIni, 0, form.Length);
+        }
 
         public void rotate(int rot, int frm)
         {
+            int value1 = 0;
+            int value2 = 0;
+            if (NBarco == 2)
+            {
+                value1 = form[2, 0];
+                value2 = form[2, 1];
+            }
+            int contador = 1;
+            int[,] CADFRM = form;
             switch (rot)
             {
                 case 0:
-                    
-                    form = formIni;
+
+                    Array.Copy(formIni, 0, form, 0, formIni.Length);
+                    setSIGs(getImages(this.NBarco, 0));
                     break;
                 case 90:
-                    rotate(0, 0);
-                    if (frm == 2)
-                    {
-                        int value = form[0, 0];
-                        form[0, 0] = form[0, 1];
-                        form[0, 1] = value;
-                    }
-                    else if (frm == 5)
+                    //rotate(0, frm);
+                     if (frm == 5)
                     {
                         int[,] val = { { form[1,0], form[1,1] } };
                         form[1, 0] = form[2, 0];
@@ -115,68 +159,111 @@ namespace Battleship.Logica
                         form[4, 1] = form[3, 1];
                         form[3, 0] = val[0, 0];
                         form[3, 1] = val[0, 1];
-                        form[0,0] = 2;
-                        form[0, 1] = 3;
-                        form[5, 0] = 1;
-                        form[5, 1] = 0;
-                    }
-                    else
+                        int[,] val2 = { { form[0, 0], form[0, 1] } };
+                        form[0,0] = form[5, 0] -  1;
+                        form[0, 1] = form[5, 1] + 2;
+                        form[5, 0] = val2[0, 0] + 1;
+                        form[5, 1] = val2[0, 1] -2;
+                    } else 
                     {
+                        contador = 1;
+                        
                         for (int i = 0; i < form.GetLength(0); i++)
                         {
-                            int value1 = 2;
-                            int value2 = form[i, 1];
-                            form[i, 0] = value2;
-                            form[i, 1] = value1;
+                           /* for (int j = 1; j < form.GetLength(1); j++)
+                            {*/
+                        if(i!=1)
+                            {
+                                
+                                if (form[1, 0] > form[i, 0])
+                                {
+                                    form[i, 0] = form[i, 0] + contador;
+                                    form[i, 1] = form[i, 1] - contador;
+                                } else if (form[1, 0] < form[i, 0])
+                                {
+                                    form[i, 0] = form[i, 0] - contador;
+                                    form[i, 1] = form[i, 1] + contador;
+                                }
+                                if(i >= 2)
+                                {
+                                    contador++;
+                                }
 
+                            }
+                            //}
                         }
+                        
+
                     }
+                        setSIGs(getImages(this.NBarco, 1));
                     break;
                 case 180:
-                    rotate(0 ,0);
-                    if (frm == 2)
+                    contador = 1;
+                    for (int i = 0; i < form.GetLength(0); i++)
                     {
-                        form[3, 0] = 0;
-                        form[3, 1] = 1;
-                    }
-                    else
-                    {
-
-                        rotate(90, 0);
-                        for (int i = 0; i < form.GetLength(0); i++)
+                        /* for (int j = 1; j < form.GetLength(1); j++)
+                         {*/
+                        if (i != 1)
                         {
 
-                            int value1 = form[i, 0];
-                            int value2 = form[i, 1];
-
-                            form[i, 0] = value2;
-                            form[i, 1] = value1;
+                            if (form[1, 0] > form[i, 0])
+                            {
+                                form[i, 0] = form[i, 0] + contador;
+                                form[i, 1] = form[i, 1] + contador;
+                            }
+                            else if (form[1, 0] < form[i, 0])
+                            {
+                                form[i, 0] = form[i, 0] - contador;
+                                form[i, 1] = form[i, 1] - contador;
+                            }
+                            if (i >= 2)
+                            {
+                                contador++;
+                            }
 
                         }
+                        //}
                     }
+                    setSIGs(getImages(this.NBarco, 2));
                     break;
                 case 270:
-                    rotate(0, 0);
-                    if (frm == 2)
-                    {
-                        form[4, 0] = 1;
-                        form[4, 1] = 0;
-                    }
-                    else
-                    {
-                        for (int i = 0; i < form.GetLength(0); i++)
-                        {
-                            int value1 = form[i, 0];
-                            int value2 = form[i, 1];
+                    contador = 1;
 
-                            form[i, 0] = value2;
-                            form[i, 1] = value1;
+                    for (int i = 0; i < form.GetLength(0); i++)
+                    {
+                        /* for (int j = 1; j < form.GetLength(1); j++)
+                         {*/
+                        if (i != 1)
+                        {
+
+                            if (form[1, 0] > form[i, 0])
+                            {
+                                form[i, 0] = form[i, 0] + contador;
+                                form[i, 1] = form[i, 1] - contador;
+                            }
+                            else if (form[1, 0] < form[i, 0])
+                            {
+                                form[i, 0] = form[i, 0] - contador;
+                                form[i, 1] = form[i, 1] + contador;
+                            }
+                            if (i >= 2)
+                            {
+                                contador++;
+                            }
 
                         }
+                        //}
                     }
+                    setSIGs(getImages(this.NBarco, 3));
                     break;
             }
-            
+            if (NBarco == 2)
+            {
+                form[3, 0] = value1;
+                form[3, 1] = value2;
+            }
+            //this.formIni = CADFRM;
+
         }
 
         public Image GetImage()
