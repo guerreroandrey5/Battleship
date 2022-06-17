@@ -13,14 +13,19 @@ namespace Battleship.Logica.Objetos
 {
     internal class Board
     {
-        private static Label[,] campo = new Label[10, 10];
+        private Label[,] campo = new Label[10, 10];
         private static int tam = 6;
-        protected static Ship[,] barcos = new Ship[1, tam];
+        private static Ship[,] barcos = new Ship[2, tam];
         protected static string[][,] imagesS = new string[6][,];
         private ImagenManagment imgMgnt = new ImagenManagment();
         private int[][,] formas = new int[6][,];
         string filePath =  Directory.GetCurrentDirectory();
-        
+
+        public Ship[,] Barcos
+        {
+            get { return barcos; }
+        }
+
         public Board()
         {
             setformas();
@@ -82,33 +87,45 @@ namespace Battleship.Logica.Objetos
             return formas[idn];
         }
 
-        public Panel GenerarCampo(Panel panel = null)
+        public void repintar(Ship ship)
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                for (int j = 0; j < 10; j++)
+                {
+                    setLabel(i, j, "Repintar", ship);
+                }
+            }
+        }
+
+        public void GenerarCampo(Panel panel = null)
         {
             for (int i = 0; i < campo.GetLength(0); i++)
             {
                 for (int j = 0; j < campo.GetLength(1); j++)
                 {
-                    panel = setLabel(j, i, panel, "Mar", null);
+                    setLabel(i, j,  "Mar", null);
                 }
             }
 
-            return panel;
+           /* return panel;*/
         }
 
-        public Panel setLabel(int x, int y, Panel panel, String status, Ship shp, Label[,] campoAc = null)
+        public /*Panel*/ void setLabel(int x, int y, String status, Ship shp, Label[,] campoAC = null)
         { //Coloca los labels en el panel de juego
-            if (campoAc == null)
+            if (campoAC != null)
             {
-                campoAc = campo;
+                campo = campoAC;
             }
             switch (status)
             {
                 case "Mar":
-                    if (panel != null)
-                    {
+                    
                         campo[x, y] = new Label();
                     }                   
-                    campoAc[x, y].Image = (Image)imgMgnt.ResizeImage(Image.FromFile(filePath + @"\Imagenes\mar.png"), 50, 50);              
+                    Console.WriteLine(filePath);
+                    campoAc[x, y].Image = (Image)imgMgnt.ResizeImage(Image.FromFile(filePath + @"\Imagenes\mar.png"), 50, 50);
+                    //campo[x, y].Image = (Image)imgMgnt.ResizeImage(Image.FromFile(@"C:\Users\Cris\Downloads\mar.png"), 50, 50);              
                     break;
 
                 case "Barco":
@@ -118,7 +135,7 @@ namespace Battleship.Logica.Objetos
                     {
                             if (shp.getFormaAct()[i,0] == indice[0,0] && shp.getFormaAct()[i, 1] == indice[0,1])
                             {
-                                campoAc[x, y].Image = (Image)imgMgnt.ResizeImage(shp.GetImage(), 50, 50);
+                                campo[x, y].Image = (Image)imgMgnt.ResizeImage(shp.GetImage(), 50, 50);
                             }
                     }
                     
@@ -129,13 +146,15 @@ namespace Battleship.Logica.Objetos
                     {
                         if (shp.getFormaAct()[i, 0] == ind[0, 0] && shp.getFormaAct()[i, 1] == ind[0, 1])
                         {
-                            campoAc[x, y].Image = (Image)imgMgnt.ResizeImage(Image.FromFile(filePath + @"\Imagenes\mar.png"), 50, 50);
+                            //campo[x, y].Image = (Image)imgMgnt.ResizeImage(Image.FromFile(@"C:\Users\Cris\Downloads\mar.png"), 50, 50);
+                            campo[x, y].Image = (Image)imgMgnt.ResizeImage(Image.FromFile(filePath + @"\Imagenes\mar.png"), 50, 50);
                         }
                     }
 
                     break;
             }
-            if(panel != null)
+            campo[x, y].SetBounds(x * 50, y * 50, 50, 50);
+            /*if(panel != null)
             {
                 campoAc[x, y].SetBounds(x * 50, y * 50, 50, 50);
                 try
@@ -152,10 +171,10 @@ namespace Battleship.Logica.Objetos
                     throw;
                 }
                 
-            }
-            
+            }*/
 
-            return panel;
+
+            // return panel;
         }
 
         public Label[,] getCampo()
@@ -180,9 +199,9 @@ namespace Battleship.Logica.Objetos
             return tam;
         }
 
-        public void setBarco(Ship sh)
+        public void setBarco(Ship sh,int ja, int idx)
         {
-
+            barcos[ja, idx] = sh;
         }
 
     }

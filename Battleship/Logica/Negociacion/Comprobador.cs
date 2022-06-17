@@ -14,9 +14,11 @@ namespace Battleship.Logica.Negociacion
             return ship.Setd;
         }
 
-        public void setCondS(Ship ship)
+        public void setCondS(Ship ship, int ja)
         {
             ship.Setd = true;
+
+            ship.setBarco(ship, ja, ship.NBarco);
         }
 
     }

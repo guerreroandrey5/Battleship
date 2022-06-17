@@ -14,7 +14,7 @@ namespace Battleship.Logica
     {
         private Image[] ShipImg;
         private int[,] pos;
-        private int NBarco;
+        public int NBarco;
         private bool move = true;
         private int[,] form;
         private int[,] formIni;

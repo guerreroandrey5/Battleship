@@ -23,29 +23,23 @@ namespace Battleship.Logica.Negociacion
         {
             Board board = new Board();
             Ship ship = new Ship(board.getImages(idx, 0),board.getForma(idx), board.getForma(idx), idx);
-            board.setBarco(ship);
+            //board.setBarco(ship);
             return ship;
         }
 
-        public void setBarco(Ship ship, Panel panel)
+        public void setBarco(Ship ship, Label[,] campo)
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           {
             for (int i = 0; i < ship.getFormaAct().GetLength(0); i++)
             {
                 int x = ship.getFormaAct()[i,0];
                 int y = ship.getFormaAct()[i, 1];
-                ship.setLabel(x,y, panel, "Barco", ship );
+                ship.setLabel(x,y, "Barco", ship, campo );
             }
             }
 
         public void getMovement(Ship ship, int x, int y)
         {
-            for (int i = 0; i < 10; i++)
-            {
-                for (int j = 0; j < 10; j++)
-                {
-                    ship.setLabel(i, j, null,  "Repintar", ship);
-                }
-            }
+            ship.repintar(ship);
             
             ship.Mover(x,y);
 
@@ -59,7 +53,7 @@ namespace Battleship.Logica.Negociacion
             {
                 for (int j = 0; j < 10; j++)
                 {
-                    ship.setLabel(i, j, null, "Repintar", ship);
+                    ship.setLabel(i, j, "Repintar", ship);
                 }
             }
             int Sbarco = ((ship.getFormaAct().Length / 2) - 1);
