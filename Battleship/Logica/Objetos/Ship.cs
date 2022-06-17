@@ -25,7 +25,7 @@ namespace Battleship.Logica
             get { return setd; }
             set { setd = value; }
         }
-
+        
 
 
         public Ship()
@@ -80,7 +80,7 @@ namespace Battleship.Logica
                 movimientos[i+1] = td;
                 i++;
             }
-            if(Array.Exists(movimientos, element => element == -1) || Array.Exists(movimientos, element => element == 9))
+            if(Array.Exists(movimientos, element => element < 0) || Array.Exists(movimientos, element => element > 8))
             {
                 move = false;
             } else
@@ -101,14 +101,10 @@ namespace Battleship.Logica
             }
         }
 
-        public void setPos(int[,] Ffrm)
-        {
-            this.pos = Ffrm;
-        }
-
+    
         public int[,] getPos()
         {
-            return this.pos;
+            return this.formIni;
         }
 
         public bool isMoving_(){
@@ -184,10 +180,31 @@ namespace Battleship.Logica
                                     form[i, 0] = form[i, 0] - contador;
                                     form[i, 1] = form[i, 1] + contador;
                                 }
-                                if(i >= 2)
+                                while (form[i, 0] < 0)
+                                {
+                                    moverBarco(1, 0);
+                                }
+                                while (form[i, 0] > 9)
+                                {
+                                    moverBarco(-1, 0);
+                                }
+                                while (form[i, 1] < 0)
+                                {
+                                    moverBarco(0, 1);
+                                }
+                                while (form[i, 1] > 9)
+                                {
+                                    moverBarco(0, -1);
+                                }
+                                if (i >= 2)
                                 {
                                     contador++;
                                 }
+                                /*if (form[1, 0] == -1 || form[i, 0] == -1 || form[1, 0] == 10 || form[i, 0] == 10)
+                                {
+                                    form = CADFRM;
+                                    break;
+                                }*/
 
                             }
                             //}
@@ -206,21 +223,58 @@ namespace Battleship.Logica
                         if (i != 1)
                         {
 
-                            if (form[1, 0] > form[i, 0])
+                            if ( form[i, 0] < form[1, 0]  )
                             {
                                 form[i, 0] = form[i, 0] + contador;
                                 form[i, 1] = form[i, 1] + contador;
                             }
-                            else if (form[1, 0] < form[i, 0])
+                            else if ( form[i, 0] > form[1, 0])
                             {
                                 form[i, 0] = form[i, 0] - contador;
                                 form[i, 1] = form[i, 1] - contador;
+                            } else if (form[i, 0] == form[1, 0])
+                            {
+                                if (form[i, 1] < form[1, 1])
+                                {
+                                    form[i, 0] = form[i, 0] + contador;
+                                    form[i, 1] = form[i, 1] + contador;
+                                }
+                                else if (form[i, 1] > form[1, 1])
+                                {
+                                    form[i, 0] = form[i, 0] - contador;
+                                    form[i, 1] = form[i, 1] - contador;
+                                }
+                            }
+
+                            while (form[i, 0] < 0)
+                            {
+                                moverBarco(1, 0);
+                            }
+                            while (form[i, 0] > 9)
+                            {
+                                moverBarco(-1, 0);
+                            }
+                            while (form[i, 0] < 0)
+                            {
+                                moverBarco(1, 0);
+                            }
+                            while (form[i, 1] < 0)
+                            {
+                                moverBarco(0, 1);
+                            }
+                            while (form[i, 1] > 9)
+                            {
+                                moverBarco(0, 1);
                             }
                             if (i >= 2)
                             {
                                 contador++;
                             }
-
+                            if (form[1, 0] == -1 || form[i, 0] == -1 || form[1, 0] == 10 || form[i, 0] == 10)
+                            {
+                                form = CADFRM;
+                                break;
+                            }
                         }
                         //}
                     }
@@ -239,18 +293,43 @@ namespace Battleship.Logica
                             if (form[1, 0] > form[i, 0])
                             {
                                 form[i, 0] = form[i, 0] + contador;
-                                form[i, 1] = form[i, 1] - contador;
+                                form[i, 1] = form[i, 1] - contador ;
                             }
                             else if (form[1, 0] < form[i, 0])
                             {
                                 form[i, 0] = form[i, 0] - contador;
                                 form[i, 1] = form[i, 1] + contador;
                             }
+                            while (form[i, 0] < 0)
+                            {
+                                moverBarco(1, 0);
+                            }
+                            while (form[i, 0] > 9)
+                            {
+                                moverBarco(-1, 0);
+                            }
+                            while (form[i, 0] < 0)
+                            {
+                                moverBarco(1, 0);
+                            }
+                            while (form[i, 1] < 0)
+                            {
+                                moverBarco(0, 1);
+                            }
+                            while (form[i, 1] > 9)
+                            {
+                                moverBarco(0, 1);
+                            }
+
                             if (i >= 2)
                             {
                                 contador++;
                             }
-
+                            if (form[1, 0] == -1 || form[i, 0] == -1 || form[1, 0] == 10 || form[i, 0] == 10)
+                            {
+                                form = CADFRM;
+                                break;
+                            }
                         }
                         //}
                     }

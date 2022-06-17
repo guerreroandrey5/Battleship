@@ -5,6 +5,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -12,7 +13,7 @@ namespace Battleship.Logica.Objetos
 {
     internal class Board
     {
-        protected static Label[,] campo = new Label[10, 10];
+        private static Label[,] campo = new Label[10, 10];
         private static int tam = 6;
         protected static Ship[,] barcos = new Ship[1, tam];
         protected static string[][,] imagesS = new string[6][,];
@@ -23,6 +24,12 @@ namespace Battleship.Logica.Objetos
         public Board()
         {
             setformas();
+        }
+
+        public Board(Panel panel)
+        {
+            setformas();
+            GenerarCampo(panel);
         }
 
         private void setformas()
@@ -51,6 +58,8 @@ namespace Battleship.Logica.Objetos
                                 { "90_BG1", "90_BG2","90_BG3", "90_BG4" },
                                 { "180_BG1", "180_BG2","180_BG3", "180_BG4" },
                                 { "270_BG1", "270_BG2","270_BG3", "270_BG4" }};
+            string[,] imagen5 = { { "PA1", "PA2", "PA3", "PA4", "PA5" },
+                                  { "R_PA1", "R_PA2", "R_PA3", "R_PA4", "R_PA5" } };
             string[,] imagen6 = { { "PA1", "PA2", "PA3", "PA4", "PA5", "PA6" },
                                   { "R_PA1", "R_PA2", "R_PA3", "R_PA4", "R_PA5", "R_PA6" } };
             formas[0] = array1;
@@ -64,7 +73,7 @@ namespace Battleship.Logica.Objetos
             imagesS[1] = imagen2;
             imagesS[2] = imagen3;
             imagesS[3] = imagen4;
-            //imagesS[4] = imagen5;
+            imagesS[4] = imagen5;
             imagesS[5] = imagen6;
         }
 
@@ -86,9 +95,12 @@ namespace Battleship.Logica.Objetos
             return panel;
         }
 
-        public Panel setLabel(int x, int y, Panel panel, String status, Ship shp)
+        public Panel setLabel(int x, int y, Panel panel, String status, Ship shp, Label[,] campoAc = null)
         { //Coloca los labels en el panel de juego
-            
+            if (campoAc == null)
+            {
+                campoAc = campo;
+            }
             switch (status)
             {
                 case "Mar":
@@ -97,7 +109,7 @@ namespace Battleship.Logica.Objetos
                         campo[x, y] = new Label();
                     }                   
                     Console.WriteLine(filePath);
-                    campo[x, y].Image = (Image)imgMgnt.ResizeImage(Image.FromFile(filePath + @"\Imagenes\mar.png"), 50, 50);
+                    campoAc[x, y].Image = (Image)imgMgnt.ResizeImage(Image.FromFile(filePath + @"\Imagenes\mar.png"), 50, 50);
                     //campo[x, y].Image = (Image)imgMgnt.ResizeImage(Image.FromFile(@"C:\Users\Cris\Downloads\mar.png"), 50, 50);              
                     break;
 
@@ -109,7 +121,7 @@ namespace Battleship.Logica.Objetos
                     {
                             if (shp.getFormaAct()[i,0] == indice[0,0] && shp.getFormaAct()[i, 1] == indice[0,1])
                             {
-                                campo[x, y].Image = (Image)imgMgnt.ResizeImage(shp.GetImage(), 50, 50);
+                                campoAc[x, y].Image = (Image)imgMgnt.ResizeImage(shp.GetImage(), 50, 50);
                             }
                     }
                     
@@ -123,7 +135,7 @@ namespace Battleship.Logica.Objetos
                         if (shp.getFormaAct()[i, 0] == ind[0, 0] && shp.getFormaAct()[i, 1] == ind[0, 1])
                         {
                             //campo[x, y].Image = (Image)imgMgnt.ResizeImage(Image.FromFile(@"C:\Users\Cris\Downloads\mar.png"), 50, 50);
-                            campo[x, y].Image = (Image)imgMgnt.ResizeImage(Image.FromFile(filePath + @"\Imagenes\mar.png"), 50, 50);
+                            campoAc[x, y].Image = (Image)imgMgnt.ResizeImage(Image.FromFile(filePath + @"\Imagenes\mar.png"), 50, 50);
                         }
                     }
 
@@ -131,8 +143,21 @@ namespace Battleship.Logica.Objetos
             }
             if(panel != null)
             {
-                campo[x, y].SetBounds(x * 50, y * 50, 50, 50);
-                panel.Controls.Add(campo[x, y]);
+                campoAc[x, y].SetBounds(x * 50, y * 50, 50, 50);
+                try
+                {
+                    panel.Controls.Add(campoAc[x, y]);
+                }
+                catch (Exception)
+                {
+                    Thread form = new Thread(() =>
+                    {
+                        panel.Invoke((MethodInvoker)delegate { panel.Controls.Add(campoAc[x, y]); });
+
+                    });
+                    throw;
+                }
+                
             }
             
 

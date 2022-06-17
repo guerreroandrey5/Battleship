@@ -1,5 +1,6 @@
 ﻿using Battleship.Logica;
 using Battleship.Logica.Negociacion;
+using Battleship.Logica.Objetos;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -27,6 +28,8 @@ namespace Battleship
         private Generador gen = new Generador();
         private Comprobador cbp= new Comprobador();
         private Panel panelactual;
+        private Board[]CampoJugadores = new Board[2];
+        private int jugadorAct = 0;
         protected int status = 0;
         string filePath = Environment.CurrentDirectory;
         int Ax = 0;
@@ -57,15 +60,16 @@ namespace Battleship
         }
             public void Empezar()
         {
-            gen.generarJuego(panel1, 1);
-            //gen.generarJuego(panel2,2);
+            CampoJugadores.SetValue(gen.generarJuego(panel1),0);
+            CampoJugadores.SetValue(gen.generarJuego(panel2),1);
+            panelactual = panel1;
             //setFocusable(true);
             //requestFocus();
             //addKeyListener(this);
             //SC.saveDirty();
             if (juego)
             {
-                threadDelegate  = new ThreadStart(Thread_Run);
+                threadDelegate  = new ThreadStart( Thread_Run );
                 newThread = new Thread(threadDelegate);
                 newThread.Start();
             }
@@ -90,8 +94,9 @@ namespace Battleship
             {
                 if(status == 0)
                 {
-                    barco = gen.generarBarcos(panelactual, /*idx*/2);
-                    panelactual = panel1;
+                    
+                    barco = gen.generarBarcos(panelactual, idx);
+                    
                     
                     if (!cbp.getCondS(barco) && idx < barco.getBarcosTam())
                     {
@@ -194,10 +199,11 @@ namespace Battleship
                     status = 3;
                     break;
                 case ' ':
-                    if (status == 0 || status == 1)
+                    if (status == 1)
                     {
                         Console.WriteLine("LA MAMADA MIJO");
                         cbp.setCondS(barco);
+                        status = 0;
                     }
                     break;
             }

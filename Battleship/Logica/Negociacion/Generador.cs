@@ -10,19 +10,18 @@ namespace Battleship.Logica.Negociacion
 {
     internal class Generador
     {
-        private Board board  = new Board();
+       
         
 
-        public Label[,] generarJuego(Panel panel, int cond)
+        public Board generarJuego(Panel panel)
         {
-            panel = board.GenerarCampo(panel);
-            Label[,] campo = board.getCampo();
-            return campo;
+            Board board = new Board(panel);
+            return board;
         }
 
         public Ship generarBarcos(Panel panel, int idx)
         {
-            
+            Board board = new Board();
             Ship ship = new Ship(board.getImages(idx, 0),board.getForma(idx), board.getForma(idx), idx);
             board.setBarco(ship);
             return ship;
@@ -34,7 +33,7 @@ namespace Battleship.Logica.Negociacion
             {
                 int x = ship.getFormaAct()[i,0];
                 int y = ship.getFormaAct()[i, 1];
-                board.setLabel(x,y, null, "Barco", ship );
+                ship.setLabel(x,y, panel, "Barco", ship );
             }
             }
 
@@ -44,18 +43,11 @@ namespace Battleship.Logica.Negociacion
             {
                 for (int j = 0; j < 10; j++)
                 {
-                    board.setLabel(i, j, null,  "Repintar", ship);
+                    ship.setLabel(i, j, null,  "Repintar", ship);
                 }
             }
             
             ship.Mover(x,y);
-            if (ship.isMoving_())
-            {
-                ship.setPos(ship.getFormaAct());
-            } else
-            {
-                ship.setFormaAct(ship.getPos());
-            }
 
             setBarco(ship, null);
         }
@@ -67,7 +59,7 @@ namespace Battleship.Logica.Negociacion
             {
                 for (int j = 0; j < 10; j++)
                 {
-                    board.setLabel(i, j, null, "Repintar", ship);
+                    ship.setLabel(i, j, null, "Repintar", ship);
                 }
             }
             int Sbarco = ((ship.getFormaAct().Length / 2) - 1);
@@ -86,6 +78,7 @@ namespace Battleship.Logica.Negociacion
 
         public int getT()
         {
+            Board board = new Board();
             return board.getBarcosTam();
         }
     }
