@@ -122,9 +122,9 @@ namespace Battleship.Logica.Objetos
                 case "Mar":
                     
                         campo[x, y] = new Label();
-                    }                   
+                                  
                     Console.WriteLine(filePath);
-                    campoAc[x, y].Image = (Image)imgMgnt.ResizeImage(Image.FromFile(filePath + @"\Imagenes\mar.png"), 50, 50);
+                    campo[x, y].Image = (Image)imgMgnt.ResizeImage(Image.FromFile(filePath + @"\Imagenes\mar.png"), 50, 50);
                     //campo[x, y].Image = (Image)imgMgnt.ResizeImage(Image.FromFile(@"C:\Users\Cris\Downloads\mar.png"), 50, 50);              
                     break;
 

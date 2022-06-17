@@ -61,16 +61,16 @@ namespace Battleship
         }
             public void Empezar()
         {
-            Board campo1 =  gen.generarJuego(panel1);
-            Board campo2 =  gen.generarJuego(panel2);
+            Board campo1 =  gen.generarJuego(PlnGame);
+            Board campo2 =  gen.generarJuego(PlnGame2);
             
-            panelactual = panel1;
+            panelactual = PlnGame;
             for (int i = 0; i <campo1.getCampo().GetLength(0); i++)
             {
                 for (int j = 0; j < campo1.getCampo().GetLength(1); j++)
                 {
                     Label label = campo1.getCampo()[i, j];
-                    panel1.Controls.Add( label );
+                    PlnGame.Controls.Add( label );
                 }
             }
             for (int i = 0; i < campo2.getCampo().GetLength(0); i++)
@@ -78,7 +78,7 @@ namespace Battleship
                 for (int j = 0; j < campo2.getCampo().GetLength(1); j++)
                 {
                     Label label = campo2.getCampo()[i, j];
-                    panel2.Controls.Add(label);
+                    PlnGame2.Controls.Add(label);
                 }
             }
 
@@ -159,33 +159,37 @@ namespace Battleship
                     status = 1;
                 } else if (status == 4)
                 {
+                    
+                }
+                else if (status == 5)
+                {
                     for (int j = 0; j < CampoJugadores[jugadorAct].Barcos.GetLength(1); j++)
                     {
                         Ship ship = CampoJugadores[jugadorAct].Barcos[jugadorAct, j];
 
                         gen.setBarco(ship, CampoJugadores[jugadorAct].getCampo());
                     }
-                    
-                }
-               /* int porcentaje = gen.CheckPolvo();
-                JLprc.setText(String.valueOf(porcentaje) + "%");
-                gen.getPosition(Robot, Mov, MovPers);
-                MovPers = Mov;
-                gen.comprobar(Robot, "Polvo");
-                boolean game = gen.comprobar(Robot, "Obstaculos");
-                if (game)
-                {
-                    resetMovement();
 
                 }
+                /* int porcentaje = gen.CheckPolvo();
+                 JLprc.setText(String.valueOf(porcentaje) + "%");
+                 gen.getPosition(Robot, Mov, MovPers);
+                 MovPers = Mov;
+                 gen.comprobar(Robot, "Polvo");
+                 boolean game = gen.comprobar(Robot, "Obstaculos");
+                 if (game)
+                 {
+                     resetMovement();
 
-                if (porcentaje == 0)
-                {
-                    JOptionPane.showMessageDialog(null, "¡El salon esta limpio!");
-                    snd.ReproducirSonidoyay();
-                    Finalizar();
-               *
-                }*/
+                 }
+
+                 if (porcentaje == 0)
+                 {
+                     JOptionPane.showMessageDialog(null, "¡El salon esta limpio!");
+                     snd.ReproducirSonidoyay();
+                     Finalizar();
+                *
+                 }*/
 
             }
             /*if (((Robot.getX()) <= -10) || ((Robot.getY()) <= -30) || ((Robot.getY()) >= 350) || ((Robot.getX()) >= 370))
@@ -261,7 +265,7 @@ namespace Battleship
                     DialogResult resul = MessageBox.Show(messag, titl, button, MessageBoxIcon.Warning);
                     if (resul == DialogResult.Yes)
                     {
-                        //Inicia la partida
+                        status = 5;//Inicia la partida
                     }
                     break;
                 case ' ':
@@ -272,11 +276,16 @@ namespace Battleship
                         cbp.setCondS(barco, jugadorAct);
                         if ((idx == barco.getBarcosTam()) && (jugadorAct == 1))
                         {
+                            repintarPanel();
                             CambiarJugador();
                             status = 4;
-                        } else { 
-                        CambiarJugador();
-                        status = 0;
+                        } else {
+                            if ((idx == barco.getBarcosTam()))
+                            {
+                                j2();
+                            }
+                            CambiarCambiarPanel();
+                            status = 0;
                     }
                     }
                     
@@ -288,54 +297,62 @@ namespace Battleship
             string titl = "Jugador 2";
             string tex = "Coloque sus Barcos en la posicion deseada";
             MessageBox.Show(tex, titl);
-            CampoJugadores.SetValue(gen.generarJuego(PlnGame2), 1);
-            panelactual = PlnGame2;
+            /*CampoJugadores.SetValue(gen.generarJuego(PlnGame2), 1);
+            panelactual = PlnGame2;*/
         }
 
         public void CambiarJugador()
         {
+            if (jugadorAct == 1)
+            {
+                jugadorAct = 0;
+            }
+            else
+            {
+                jugadorAct = 1;
+            }
+        }
+
+        public void repintarPanel()
+        {
+            for (int j = 0; j < CampoJugadores[jugadorAct].Barcos.GetLength(1); j++)
+            {
+                Ship ship = CampoJugadores[jugadorAct].Barcos[jugadorAct, j];
+
+                CampoJugadores[jugadorAct].repintar(ship);
+            }
+        }
+
+        public void CambiarCambiarPanel()
+        {
             if (idx == barco.getBarcosTam())
             {
                 int height, width;
-                if (panel1.Width > panel2.Width)
+                if (PlnGame.Width > PlnGame2.Width)
                 {
-                    height = panel1.Height;
-                    width = panel1.Width;
-                    panel1.Height = panel2.Height;
-                    panel1.Width = panel2.Width;
-                    panel2.Height = height;
-                    panel2.Width = width;
+                    height = PlnGame.Height;
+                    width = PlnGame.Width;
+                    PlnGame.Height = PlnGame2.Height;
+                    PlnGame.Width = PlnGame2.Width;
+                    PlnGame2.Height = height;
+                    PlnGame2.Width = width;
 
-                    for (int j = 0; j < CampoJugadores[jugadorAct].Barcos.GetLength(1); j++)
-                    {
-                        Ship ship = CampoJugadores[jugadorAct].Barcos[jugadorAct, j];
-
-                        CampoJugadores[jugadorAct].repintar(ship);
-                    }
+                    repintarPanel();
 
                 }
                 else
                 {
-                    height = panel2.Height;
-                    width = panel2.Width;
-                    panel2.Height = panel1.Height;
-                    panel2.Width = panel1.Width;
-                    panel1.Height = height;
-                    panel1.Width = width;
-                    for (int j = 0; j < CampoJugadores[jugadorAct].Barcos.GetLength(1); j++)
-                    {
-                        Ship ship = CampoJugadores[jugadorAct].Barcos[jugadorAct, j];
+                    height = PlnGame2.Height;
+                    width = PlnGame2.Width;
+                    PlnGame2.Height = PlnGame.Height;
+                    PlnGame2.Width = PlnGame.Width;
+                    PlnGame.Height = height;
+                    PlnGame.Width = width;
 
-                        CampoJugadores[jugadorAct].repintar(ship);
-                    }
+                    repintarPanel();
                 }
-                if(jugadorAct == 1)
-                {
-                    jugadorAct = 0;
-                } else
-                {
-                    jugadorAct = 1;
-                }
+
+                CambiarJugador();
                 
                 idx = 0;
 
@@ -346,7 +363,7 @@ namespace Battleship
         {
 
         }
-        private void panel1_Paint(object sender, PaintEventArgs e)
+        private void PlnGame_Paint(object sender, PaintEventArgs e)
         {
 
         }

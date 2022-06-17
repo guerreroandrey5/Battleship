@@ -43,7 +43,7 @@
             this.PlnGame.Name = "PlnGame";
             this.PlnGame.Size = new System.Drawing.Size(500, 450);
             this.PlnGame.TabIndex = 0;
-            this.PlnGame.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
+            this.PlnGame.Paint += new System.Windows.Forms.PaintEventHandler(this.PlnGame_Paint);
             // 
             // PlnGame2
             // 
