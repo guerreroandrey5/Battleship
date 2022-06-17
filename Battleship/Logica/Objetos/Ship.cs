@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Media;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,6 +21,7 @@ namespace Battleship.Logica
         public int size = -1;
         private int rotation = 0;
         private bool setd = false;
+        string filePath = Environment.CurrentDirectory;
         public bool Setd
         {
             get { return setd; }
@@ -82,9 +84,17 @@ namespace Battleship.Logica
             }
             if(Array.Exists(movimientos, element => element < 0) || Array.Exists(movimientos, element => element > 8))
             {
+                using (var soundPlayer = new SoundPlayer(filePath + @"\Sounds\Uff.wav"))
+                {
+                    soundPlayer.Play();
+                }
                 move = false;
             } else
             {
+                using (var soundPlayer = new SoundPlayer(filePath + @"\Sounds\movement.wav"))
+                {
+                    soundPlayer.Play();
+                }
                 move = true;
                 moverBarco(x, y);
             }

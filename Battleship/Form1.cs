@@ -18,7 +18,7 @@ using System.Windows.Forms;
 
 namespace Battleship
 {
-    public partial class Form1 : Form
+    public partial class BtlShip : Form
     {
 
         private ThreadStart threadDelegate;
@@ -26,7 +26,7 @@ namespace Battleship
         private bool juego = true;
         private Ship barco = new Ship();
         private Generador gen = new Generador();
-        private Comprobador cbp= new Comprobador();
+        private Comprobador cbp = new Comprobador();
         private Panel panelactual;
         private Board[]CampoJugadores = new Board[2];
         private int jugadorAct = 0;
@@ -35,10 +35,11 @@ namespace Battleship
         int Ax = 0;
         int Ay = 0;
         private int idx = 0;
-        public Form1()
+        public BtlShip()
         {
             InitializeComponent();
             Empezar();
+            load();
         }
 
         public void Thread_Run()
@@ -60,9 +61,9 @@ namespace Battleship
         }
             public void Empezar()
         {
-            CampoJugadores.SetValue(gen.generarJuego(panel1),0);
-            CampoJugadores.SetValue(gen.generarJuego(panel2),1);
-            panelactual = panel1;
+            CampoJugadores.SetValue(gen.generarJuego(PlnGame),0);
+            //CampoJugadores.SetValue(gen.generarJuego(panel2),1);
+            panelactual = PlnGame;
             //setFocusable(true);
             //requestFocus();
             //addKeyListener(this);
@@ -73,9 +74,14 @@ namespace Battleship
                 newThread = new Thread(threadDelegate);
                 newThread.Start();
             }
-
+    
         }
-
+        public void load()
+        {
+            string title = "Jugador 1";
+            string text = "Coloque sus Barcos en la posicion deseada";
+            MessageBox.Show(text, title);
+        }
         public void Finalizar()
         {
            /* save.mLis();
@@ -198,6 +204,26 @@ namespace Battleship
                     
                     status = 3;
                     break;
+                case 'x':
+                    string message = "Esta Seguro de Salir?";
+                    string title = "Advertencia";
+                    MessageBoxButtons buttons = MessageBoxButtons.YesNo;
+                    DialogResult result = MessageBox.Show(message, title, buttons, MessageBoxIcon.Warning);
+                    if (result == DialogResult.Yes)
+                    {
+                        this.Close();
+                    }
+                    break;
+                case 'i':
+                    string messag = "Esta Seguro de Iniciar la Partida?";
+                    string titl = "Advertencia";
+                    MessageBoxButtons button = MessageBoxButtons.YesNo;
+                    DialogResult resul = MessageBox.Show(messag, titl, button, MessageBoxIcon.Warning);
+                    if (resul == DialogResult.Yes)
+                    {
+                        //Inicia la partida
+                    }
+                    break;
                 case ' ':
                     if (status == 1)
                     {
@@ -208,17 +234,22 @@ namespace Battleship
                     break;
             }
         }
-
+        public void j2()
+        {
+            string titl = "Jugador 2";
+            string tex = "Coloque sus Barcos en la posicion deseada";
+            MessageBox.Show(tex, titl);
+            CampoJugadores.SetValue(gen.generarJuego(PlnGame2), 1);
+            panelactual = PlnGame2;
+        }
         private void Form1_Load(object sender, EventArgs e)
         {
 
         }
-
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
 
         }
-
         private void button1_Click(object sender, EventArgs e)
         {
             using (var soundPlayer = new SoundPlayer(filePath + @"\Sounds\hit.wav"))
@@ -241,6 +272,11 @@ namespace Battleship
             {
                 soundPlayer.Play(); // can also use soundPlayer.PlaySync()
             }
+        }
+
+        private void BtlShip_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            this.Close();
         }
     }
 

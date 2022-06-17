@@ -1,6 +1,6 @@
 ﻿namespace Battleship
 {
-    partial class Form1
+    partial class BtlShip
     {
         /// <summary>
         /// Required designer variable.
@@ -28,29 +28,30 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BtlShip));
+            this.PlnGame = new System.Windows.Forms.Panel();
+            this.PlnGame2 = new System.Windows.Forms.Panel();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // panel1
+            // PlnGame
             // 
-            this.panel1.BackColor = System.Drawing.SystemColors.Highlight;
-            this.panel1.Location = new System.Drawing.Point(12, 12);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(560, 560);
-            this.panel1.TabIndex = 0;
-            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
+            this.PlnGame.BackColor = System.Drawing.SystemColors.Highlight;
+            this.PlnGame.Location = new System.Drawing.Point(12, 12);
+            this.PlnGame.Name = "PlnGame";
+            this.PlnGame.Size = new System.Drawing.Size(500, 450);
+            this.PlnGame.TabIndex = 0;
+            this.PlnGame.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
-            // panel2
+            // PlnGame2
             // 
-            this.panel2.BackColor = System.Drawing.SystemColors.Highlight;
-            this.panel2.Location = new System.Drawing.Point(646, 12);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(300, 300);
-            this.panel2.TabIndex = 1;
+            this.PlnGame2.BackColor = System.Drawing.SystemColors.Highlight;
+            this.PlnGame2.Location = new System.Drawing.Point(646, 12);
+            this.PlnGame2.Name = "PlnGame2";
+            this.PlnGame2.Size = new System.Drawing.Size(300, 300);
+            this.PlnGame2.TabIndex = 1;
             // 
             // button1
             // 
@@ -85,15 +86,20 @@
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
-            // Form1
+            // BtlShip
             // 
-            this.ClientSize = new System.Drawing.Size(958, 658);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.ClientSize = new System.Drawing.Size(957, 522);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.panel2);
-            this.Controls.Add(this.panel1);
-            this.Name = "Form1";
+            this.Controls.Add(this.PlnGame2);
+            this.Controls.Add(this.PlnGame);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Name = "BtlShip";
+            this.Text = "Battleship";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.BtlShip_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Form1_KeyPress);
             this.ResumeLayout(false);
@@ -102,8 +108,8 @@
 
         #endregion
 
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Panel PlnGame;
+        private System.Windows.Forms.Panel PlnGame2;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;

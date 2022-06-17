@@ -108,14 +108,11 @@ namespace Battleship.Logica.Objetos
                     {
                         campo[x, y] = new Label();
                     }                   
-                    Console.WriteLine(filePath);
-                    campoAc[x, y].Image = (Image)imgMgnt.ResizeImage(Image.FromFile(filePath + @"\Imagenes\mar.png"), 50, 50);
-                    //campo[x, y].Image = (Image)imgMgnt.ResizeImage(Image.FromFile(@"C:\Users\Cris\Downloads\mar.png"), 50, 50);              
+                    campoAc[x, y].Image = (Image)imgMgnt.ResizeImage(Image.FromFile(filePath + @"\Imagenes\mar.png"), 50, 50);              
                     break;
 
                 case "Barco":
                     int[,] indice = { { x, y } };
-                    //campo[x][y].setIcon(controlIMG.getScaledImage(new ImageIcon("E:/Codigo U/Programacion 2/LP2.1-Robot/dust.png"), 50, 50));
 
                     for (int i = 0; i < shp.getFormaAct().GetLength(0); i++)
                     {
@@ -128,13 +125,10 @@ namespace Battleship.Logica.Objetos
                     break;
                 case "Repintar":
                     int[,] ind = { { x, y } };
-                    //campo[x][y].setIcon(controlIMG.getScaledImage(new ImageIcon("E:/Codigo U/Programacion 2/LP2.1-Robot/dust.png"), 50, 50));
-
                     for (int i = 0; i < shp.getFormaAct().GetLength(0); i++)
                     {
                         if (shp.getFormaAct()[i, 0] == ind[0, 0] && shp.getFormaAct()[i, 1] == ind[0, 1])
                         {
-                            //campo[x, y].Image = (Image)imgMgnt.ResizeImage(Image.FromFile(@"C:\Users\Cris\Downloads\mar.png"), 50, 50);
                             campoAc[x, y].Image = (Image)imgMgnt.ResizeImage(Image.FromFile(filePath + @"\Imagenes\mar.png"), 50, 50);
                         }
                     }
