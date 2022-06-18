@@ -28,9 +28,11 @@ namespace Battleship
         private Generador gen = new Generador();
         private Comprobador cbp = new Comprobador();
         private Panel panelactual;
-        private Board[]CampoJugadores = new Board[2];
+        private Board[] CampoJugadores = new Board[2];
         private int jugadorAct = 0;
+        private int aimAct = 0;
         protected int status = 0;
+        protected int aim = 0;
         string filePath = Environment.CurrentDirectory;
         int Ax = 0;
         int Ay = 0;
@@ -55,22 +57,22 @@ namespace Battleship
                 {
                     throw;
                 }
-               
+
 
             }
         }
-            public void Empezar()
+        public void Empezar()
         {
-            Board campo1 =  gen.generarJuego(PlnGame);
-            Board campo2 =  gen.generarJuego(PlnGame2);
-            
+            Board campo1 = gen.generarJuego(PlnGame);
+            Board campo2 = gen.generarJuego(PlnGame2);
+
             panelactual = PlnGame;
-            for (int i = 0; i <campo1.getCampo().GetLength(0); i++)
+            for (int i = 0; i < campo1.getCampo().GetLength(0); i++)
             {
                 for (int j = 0; j < campo1.getCampo().GetLength(1); j++)
                 {
                     Label label = campo1.getCampo()[i, j];
-                    PlnGame.Controls.Add( label );
+                    PlnGame.Controls.Add(label);
                 }
             }
             for (int i = 0; i < campo2.getCampo().GetLength(0); i++)
@@ -90,11 +92,11 @@ namespace Battleship
             //SC.saveDirty();
             if (juego)
             {
-                threadDelegate  = new ThreadStart( Thread_Run );
+                threadDelegate = new ThreadStart(Thread_Run);
                 newThread = new Thread(threadDelegate);
                 newThread.Start();
             }
-    
+
         }
         public void load()
         {
@@ -104,10 +106,10 @@ namespace Battleship
         }
         public void Finalizar()
         {
-           /* save.mLis();
-            ListAnt.setModel(save.AddModel);
-            SC.saveCleaned();
-            SC.setPerce(JLprc.getText());*/
+            /* save.mLis();
+             ListAnt.setModel(save.AddModel);
+             SC.saveCleaned();
+             SC.setPerce(JLprc.getText());*/
             juego = false;
             //PlnGame.removeAll();
 
@@ -115,30 +117,33 @@ namespace Battleship
 
         public void Actualizar()
         {
-            
+
             if (juego)
             {
-                if(status == 0)
+                if (status == 0)
                 {
-                    
+
                     barco = gen.generarBarcos(panelactual, idx);
-                    
-                    
-                    if (!cbp.getCondS(barco) )
+
+
+                    if (!cbp.getCondS(barco))
                     {
                         gen.setBarco(barco, CampoJugadores[jugadorAct].getCampo());
                         status = 1;
                         idx++;
-                    } 
-                } else if (status == 1)
+                    }
+                }
+                else if (status == 1)
                 {
 
-                } else if (status == 2)
+                }
+                else if (status == 2)
                 {
                     gen.getMovement(barco, Ax, Ay);
                     repintarBarcos(barco);
                     status = 1;
-                } else if(status == 3)
+                }
+                else if (status == 3)
                 {
                     int rot = 0;
                     switch (barco.getOri())
@@ -158,14 +163,17 @@ namespace Battleship
                     }
                     gen.Rotate(barco, rot);
                     status = 1;
-                } else if (status == 4)
+                }
+                else if (status == 4)
                 {
-                    
+
                 }
                 else if (status == 5)
                 {
                     repintarBarcos();
-
+                    barco = gen.generarBarcos(panelactual, 6);
+                    gen.setBarco(barco, CampoJugadores[jugadorAct].getCampo());//este hay que retocarlo para que no se "sette" el barco como tal
+                    aim = 1;
                 }
                 /* int porcentaje = gen.CheckPolvo();
                  JLprc.setText(String.valueOf(porcentaje) + "%");
@@ -201,13 +209,13 @@ namespace Battleship
             for (int j = 0; j < CampoJugadores[jugadorAct].Barcos.GetLength(1); j++)
             {
                 Ship ship = CampoJugadores[jugadorAct].Barcos[jugadorAct, j];
-                if(ship != null)
+                if (ship != null)
                 {
                     setB(ship);
                 }
-                
+
             }
-            if(sp2 != null)
+            if (sp2 != null)
             {
                 setB(sp2);
             }
@@ -234,7 +242,7 @@ namespace Battleship
                         Ay = -1;
                         status = 2;
                     }
-                    
+
                     break;
                 case 'a':
                     if (status == 1)
@@ -262,7 +270,7 @@ namespace Battleship
                     }
                     break;
                 case 'r':
-                    
+
                     status = 3;
                     break;
                 case 'x':
@@ -281,8 +289,11 @@ namespace Battleship
                     MessageBoxButtons button = MessageBoxButtons.YesNo;
                     DialogResult resul = MessageBox.Show(messag, titl, button, MessageBoxIcon.Warning);
                     if (resul == DialogResult.Yes)
-                    {
+                    {                      
                         status = 5;//Inicia la partida
+                        string messa = "Apunte a donde creas que se encuentra un barco enemigo";
+                        string tit = "Atención";
+                        MessageBox.Show(messa, tit);                       
                     }
                     break;
                 case ' ':
@@ -291,21 +302,23 @@ namespace Battleship
 
                         Console.WriteLine("LA MAMADA MIJO");
                         cbp.setCondS(barco, jugadorAct);
-                        if ((idx == barco.getBarcosTam()) && (jugadorAct == 1))
+                        if ((idx == barco.getBarcosTam() - 1) && (jugadorAct == 1))
                         {
                             repintarPanel();
                             CambiarJugador();
                             status = 4;
-                        } else {
+                        }
+                        else
+                        {
                             if ((idx == barco.getBarcosTam()))
                             {
                                 j2();
                             }
                             CambiarCambiarPanel();
                             status = 0;
+                        }
                     }
-                    }
-                    
+
                     break;
             }
         }
@@ -323,10 +336,12 @@ namespace Battleship
             if (jugadorAct == 1)
             {
                 jugadorAct = 0;
+                aimAct = 0;
             }
             else
             {
                 jugadorAct = 1;
+                aimAct = 1;
             }
         }
 
@@ -337,7 +352,7 @@ namespace Battleship
                 Ship ship = CampoJugadores[jugadorAct].Barcos[jugadorAct, j];
                 if (ship != null)
                 {
-
+                    Ship aim = CampoJugadores[aimAct].Barcos[jugadorAct, 6];
                     CampoJugadores[jugadorAct].repintar(ship);
                 }
             }
@@ -345,7 +360,7 @@ namespace Battleship
 
         public void CambiarCambiarPanel()
         {
-            if (idx == barco.getBarcosTam())
+            if (idx == barco.getBarcosTam() - 1)
             {
                 int height, width;
                 if (PlnGame.Width > PlnGame2.Width)
@@ -373,7 +388,7 @@ namespace Battleship
                 }
 
                 CambiarJugador();
-                
+
                 idx = 0;
 
             }

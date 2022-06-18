@@ -14,18 +14,17 @@ namespace Battleship.Logica.Objetos
     internal class Board
     {
         private Label[,] campo = new Label[10, 10];
-        private static int tam = 6;
+        private static int tam = 7;
         private static Ship[,] barcos = new Ship[2, tam];
-        protected static string[][,] imagesS = new string[6][,];
+        protected static string[][,] imagesS = new string[7][,];
         private ImagenManagment imgMgnt = new ImagenManagment();
-        private int[][,] formas = new int[6][,];
+        private int[][,] formas = new int[7][,];
         string filePath =  Directory.GetCurrentDirectory();
 
         public Ship[,] Barcos
         {
             get { return barcos; }
         }
-
         public Board()
         {
             setformas();
@@ -45,6 +44,7 @@ namespace Battleship.Logica.Objetos
             int[,] array4 = { { 0, 1 }, { 1, 1 }, { 2, 1 }, { 3, 1 } };
             int[,] array5 = { { 0, 1 }, { 1, 1 }, { 2, 1 }, { 3, 1 }, { 4, 1 } };
             int[,] array6 = { { 0, 2 }, { 1, 2 }, { 2, 2 }, { 1, 1 }, { 2, 1 }, { 3, 1 } };
+            int[,] array7 = { { 0, 0 } };
             //string[] imagen1 = { 'C:\Users\Cris\Downloads\mar.png' };
             //string[,] imagen2 = { { 0, 1 }, { 1, 1 }, { 2, 1 } };
             string[,] imagen1 = { { "L1", "L2" },
@@ -67,19 +67,22 @@ namespace Battleship.Logica.Objetos
                                   { "R_PA1", "R_PA2", "R_PA3", "R_PA4", "R_PA5" } };
             string[,] imagen6 = { { "PA1", "PA2", "PA3", "PA4", "PA5", "PA6" },
                                   { "R_PA1", "R_PA2", "R_PA3", "R_PA4", "R_PA5", "R_PA6" } };
+            string[,] imagen7 = { { "crosshair" }};
             formas[0] = array1;
             formas[1] = array2;
             formas[2] = array3;
             formas[3] = array4;
             formas[4] = array5;
             formas[5] = array6;
-            
+            formas[6] = array7;
+
             imagesS[0] = imagen1;
             imagesS[1] = imagen2;
             imagesS[2] = imagen3;
             imagesS[3] = imagen4;
             imagesS[4] = imagen5;
             imagesS[5] = imagen6;
+            imagesS[6] = imagen7;
         }
 
         public int[,] getForma(int idn)
@@ -137,8 +140,7 @@ namespace Battleship.Logica.Objetos
                             {
                                 campo[x, y].Image = (Image)imgMgnt.ResizeImage(shp.GetImage(), 50, 50);
                             }
-                    }
-                    
+                    }                   
                     break;
                 case "Repintar":
                     int[,] ind = { { x, y } };

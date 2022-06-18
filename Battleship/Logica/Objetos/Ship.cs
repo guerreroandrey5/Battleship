@@ -79,7 +79,7 @@ namespace Battleship.Logica
                 int tf = form[i, 0] + x;
                 int td = form[i, 1] + y;
                 movimientos[i] = tf;
-                movimientos[i+1] = td;
+                movimientos[i + 1] = td;
                 i++;
             }
             if(Array.Exists(movimientos, element => element < 0) || Array.Exists(movimientos, element => element > 8))
