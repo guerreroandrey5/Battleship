@@ -30,10 +30,9 @@ namespace Battleship.Logica.Objetos
             setformas();
         }
 
-        public Board(Panel panel)
+        public Board(PictureBox panel, int tam)
         {
-            setformas();
-            GenerarCampo(panel);
+            GenerarCampo(tam, panel);
         }
 
         private void setformas()
@@ -90,44 +89,48 @@ namespace Battleship.Logica.Objetos
             return formas[idn];
         }
 
-        public void repintar(Ship ship)
+        public void repintar(Ship ship, int s)
         {
             for (int i = 0; i < 10; i++)
             {
                 for (int j = 0; j < 10; j++)
                 {
-                    setLabel(i, j, "Repintar", ship);
+                    setLabel(i, j, "Repintar", ship, s);
                 }
             }
         }
 
-        public void GenerarCampo(Panel panel = null)
+        public void GenerarCampo(int sizes, PictureBox panel = null, Label[,] ca = null)
         {
             for (int i = 0; i < campo.GetLength(0); i++)
             {
                 for (int j = 0; j < campo.GetLength(1); j++)
                 {
-                    setLabel(i, j,  "Mar", null);
+                    setLabel(i, j,  "Mar", null, sizes, ca);
                 }
             }
 
            /* return panel;*/
         }
 
-        public /*Panel*/ void setLabel(int x, int y, String status, Ship shp, Label[,] campoAC = null)
+        public /*Panel*/ void setLabel(int x, int y, String status, Ship shp, int sL, Label[,] campoAC = null)
         { //Coloca los labels en el panel de juego
             if (campoAC != null)
             {
                 campo = campoAC;
             }
+            
             switch (status)
             {
                 case "Mar":
-                    
+                    if(campoAC == null)
+                    {
+
                         campo[x, y] = new Label();
-                                  
+
+                    }
                     Console.WriteLine(filePath);
-                    campo[x, y].Image = (Image)imgMgnt.ResizeImage(Image.FromFile(filePath + @"\Imagenes\mar.png"), 50, 50);
+                    //campo[x, y].Image = (Image)imgMgnt.ResizeImage(Image.FromFile(filePath + @"\Imagenes\mar.png"), 50, 50);
                     //campo[x, y].Image = (Image)imgMgnt.ResizeImage(Image.FromFile(@"C:\Users\Cris\Downloads\mar.png"), 50, 50);              
                     break;
 
@@ -149,13 +152,14 @@ namespace Battleship.Logica.Objetos
                         if (shp.getFormaAct()[i, 0] == ind[0, 0] && shp.getFormaAct()[i, 1] == ind[0, 1])
                         {
                             //campo[x, y].Image = (Image)imgMgnt.ResizeImage(Image.FromFile(@"C:\Users\Cris\Downloads\mar.png"), 50, 50);
-                            campo[x, y].Image = (Image)imgMgnt.ResizeImage(Image.FromFile(filePath + @"\Imagenes\mar.png"), 50, 50);
+                           campo[x, y].Image = null;
                         }
                     }
 
                     break;
             }
-            campo[x, y].SetBounds(x * 50, y * 50, 50, 50);
+            campo[x, y].BackColor = Color.Transparent;
+            cambiarTamLBL(x, y, sL);
             /*if(panel != null)
             {
                 campoAc[x, y].SetBounds(x * 50, y * 50, 50, 50);
@@ -178,6 +182,27 @@ namespace Battleship.Logica.Objetos
 
             // return panel;
         }
+
+        public void cambiarTamLBL(int x, int y, int size, Label[,] c = null)
+        {
+            if (c!= null)
+            {
+                campo = c; 
+            }
+            if (campo[x, y].InvokeRequired)
+            {
+                campo[x, y].Invoke(new MethodInvoker(delegate
+                {
+                    campo[x, y].SetBounds(x * size, y * size, size, size);
+                }));
+            }
+            else
+            {
+                campo[x, y].SetBounds(x * size, y * size, size, size);
+            }
+        }
+
+
 
         public Label[,] getCampo()
         {

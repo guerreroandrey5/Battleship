@@ -73,16 +73,17 @@ namespace Battleship.Logica
 
         public void Mover(int x, int y)
         {
-            int[] movimientos = new int[form.Length];
+            int[] movimientosX = new int[form.Length];
+            int[] movimientosY = new int[form.Length];
             for (int i = 0; i < (form.GetLength(0)); i++)
             {
                 int tf = form[i, 0] + x;
                 int td = form[i, 1] + y;
-                movimientos[i] = tf;
-                movimientos[i + 1] = td;
-                i++;
+                movimientosX[i] = tf;
+                movimientosY[i] = td;
+              
             }
-            if(Array.Exists(movimientos, element => element < 0) || Array.Exists(movimientos, element => element > 8))
+            if(Array.Exists(movimientosX, element => element < 0) || Array.Exists(movimientosX, element => element > 9) || Array.Exists(movimientosY, element => element < 0) || Array.Exists(movimientosY, element => element > 9))
             {
                 using (var soundPlayer = new SoundPlayer(filePath + @"\Sounds\Uff.wav"))
                 {
