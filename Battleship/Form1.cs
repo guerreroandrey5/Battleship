@@ -150,7 +150,7 @@ namespace Battleship
                 }
                 else if (status == 5)
                 {
-                    repintarBarcos(50);
+                    repintarBarcos(30);
                     barco = gen.generarBarcos(panelactual, 6);
                     gen.setBarco(barco, CampoJugadores[aimAct].getCampo(), 50);
                     aim = 1;
@@ -329,13 +329,15 @@ namespace Battleship
         {
             if (jugadorAct == 1)
             {
+                panelactual = PlnGame;
                 jugadorAct = 0;
-                aimAct = 1;
+                aimAct = 0;
             }
             else
             {
+                panelactual = PlnGame2;
                 jugadorAct = 1;
-                aimAct = 0;
+                aimAct = 1;
             }
         }
 
