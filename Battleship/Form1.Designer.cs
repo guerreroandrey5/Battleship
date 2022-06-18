@@ -41,7 +41,7 @@
             this.PlnGame.BackColor = System.Drawing.SystemColors.Highlight;
             this.PlnGame.Location = new System.Drawing.Point(12, 12);
             this.PlnGame.Name = "PlnGame";
-            this.PlnGame.Size = new System.Drawing.Size(500, 450);
+            this.PlnGame.Size = new System.Drawing.Size(500, 500);
             this.PlnGame.TabIndex = 0;
             this.PlnGame.Paint += new System.Windows.Forms.PaintEventHandler(this.PlnGame_Paint);
             // 

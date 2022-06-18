@@ -43,7 +43,7 @@ namespace Battleship.Logica.Negociacion
             
             ship.Mover(x,y);
 
-            setBarco(ship, null);
+            //setBarco(ship, null);
         }
 
         public void Rotate(Ship ship, int rot)

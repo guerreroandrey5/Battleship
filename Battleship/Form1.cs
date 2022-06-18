@@ -136,6 +136,7 @@ namespace Battleship
                 } else if (status == 2)
                 {
                     gen.getMovement(barco, Ax, Ay);
+                    repintarBarcos(barco);
                     status = 1;
                 } else if(status == 3)
                 {
@@ -163,12 +164,7 @@ namespace Battleship
                 }
                 else if (status == 5)
                 {
-                    for (int j = 0; j < CampoJugadores[jugadorAct].Barcos.GetLength(1); j++)
-                    {
-                        Ship ship = CampoJugadores[jugadorAct].Barcos[jugadorAct, j];
-
-                        gen.setBarco(ship, CampoJugadores[jugadorAct].getCampo());
-                    }
+                    repintarBarcos();
 
                 }
                 /* int porcentaje = gen.CheckPolvo();
@@ -200,6 +196,27 @@ namespace Battleship
         }
 
 
+        private void repintarBarcos(Ship sp2 = null)
+        {
+            for (int j = 0; j < CampoJugadores[jugadorAct].Barcos.GetLength(1); j++)
+            {
+                Ship ship = CampoJugadores[jugadorAct].Barcos[jugadorAct, j];
+                if(ship != null)
+                {
+                    setB(ship);
+                }
+                
+            }
+            if(sp2 != null)
+            {
+                setB(sp2);
+            }
+        }
+
+        private void setB(Ship ship)
+        {
+            gen.setBarco(ship, CampoJugadores[jugadorAct].getCampo());
+        }
 
         private void Form1_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -318,8 +335,11 @@ namespace Battleship
             for (int j = 0; j < CampoJugadores[jugadorAct].Barcos.GetLength(1); j++)
             {
                 Ship ship = CampoJugadores[jugadorAct].Barcos[jugadorAct, j];
+                if (ship != null)
+                {
 
-                CampoJugadores[jugadorAct].repintar(ship);
+                    CampoJugadores[jugadorAct].repintar(ship);
+                }
             }
         }
 
