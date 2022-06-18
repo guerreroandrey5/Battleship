@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 
 namespace Battleship.Logica
 {
-
     internal class Ship : Board
     {
         private Image[] ShipImg;
@@ -28,10 +27,9 @@ namespace Battleship.Logica
             set { setd = value; }
         }
         
-
-
         public Ship()
         {
+
         }
 
         public Ship(string[] imgRL, int[,] pos, int[,] frm, int numB)
@@ -41,8 +39,6 @@ namespace Battleship.Logica
             this.formIni = new int[frm.GetLength(0), frm.GetLength(1)];
             Array.Copy(frm, 0, formIni, 0, frm.Length);
             setFormaAct(frm.Clone() as int[,]);
-
-
         }
 
         public bool checkSet()
@@ -66,11 +62,13 @@ namespace Battleship.Logica
         {
             return form;
         }
+
         public void setFormaAct(int[,] Fpos)
         {
             this.form = Fpos;
         }
 
+        #region Movimentos del Barco/Mira
         public void Mover(int x, int y)
         {
             int[] movimientosX = new int[form.Length];
@@ -83,6 +81,7 @@ namespace Battleship.Logica
                 movimientosY[i] = td;
               
             }
+
             if(Array.Exists(movimientosX, element => element < 0) || Array.Exists(movimientosX, element => element > 9) || Array.Exists(movimientosY, element => element < 0) || Array.Exists(movimientosY, element => element > 9))
             {
                 using (var soundPlayer = new SoundPlayer(filePath + @"\Sounds\Uff.wav"))
@@ -111,8 +110,8 @@ namespace Battleship.Logica
                 formIni[i, 1] += y;
             }
         }
+        #endregion
 
-    
         public int[,] getPos()
         {
             return this.formIni;
@@ -126,15 +125,18 @@ namespace Battleship.Logica
         {
             return rotation;
         }
+
         public void setOri(int o)
         {
             this.rotation = o;
         }
+
         public void setFOri()
         {
             Array.Copy(form, 0, formIni, 0, form.Length);
         }
 
+        #region Rotar
         public void rotate(int rot, int frm)
         {
             int value1 = 0;
@@ -154,7 +156,6 @@ namespace Battleship.Logica
                     setSIGs(getImages(this.NBarco, 0));
                     break;
                 case 90:
-                    //rotate(0, frm);
                      if (frm == 5)
                     {
                         int[,] val = { { form[1,0], form[1,1] } };
@@ -177,11 +178,8 @@ namespace Battleship.Logica
                         
                         for (int i = 0; i < form.GetLength(0); i++)
                         {
-                           /* for (int j = 1; j < form.GetLength(1); j++)
-                            {*/
                         if(i!=1)
-                            {
-                                
+                            {                              
                                 if (form[1, 0] > form[i, 0])
                                 {
                                     form[i, 0] = form[i, 0] + contador;
@@ -211,17 +209,8 @@ namespace Battleship.Logica
                                 {
                                     contador++;
                                 }
-                                /*if (form[1, 0] == -1 || form[i, 0] == -1 || form[1, 0] == 10 || form[i, 0] == 10)
-                                {
-                                    form = CADFRM;
-                                    break;
-                                }*/
-
                             }
-                            //}
                         }
-                        
-
                     }
                         setSIGs(getImages(this.NBarco, 1));
                     break;
@@ -229,11 +218,8 @@ namespace Battleship.Logica
                     contador = 1;
                     for (int i = 0; i < form.GetLength(0); i++)
                     {
-                        /* for (int j = 1; j < form.GetLength(1); j++)
-                         {*/
                         if (i != 1)
                         {
-
                             if ( form[i, 0] < form[1, 0]  )
                             {
                                 form[i, 0] = form[i, 0] + contador;
@@ -287,7 +273,6 @@ namespace Battleship.Logica
                                 break;
                             }
                         }
-                        //}
                     }
                     setSIGs(getImages(this.NBarco, 2));
                     break;
@@ -296,11 +281,8 @@ namespace Battleship.Logica
 
                     for (int i = 0; i < form.GetLength(0); i++)
                     {
-                        /* for (int j = 1; j < form.GetLength(1); j++)
-                         {*/
                         if (i != 1)
                         {
-
                             if (form[1, 0] > form[i, 0])
                             {
                                 form[i, 0] = form[i, 0] + contador;
@@ -342,7 +324,6 @@ namespace Battleship.Logica
                                 break;
                             }
                         }
-                        //}
                     }
                     setSIGs(getImages(this.NBarco, 3));
                     break;
@@ -352,10 +333,8 @@ namespace Battleship.Logica
                 form[3, 0] = value1;
                 form[3, 1] = value2;
             }
-            //this.formIni = CADFRM;
-
         }
-
+        #endregion  
         public Image GetImage()
         {
 
@@ -368,8 +347,5 @@ namespace Battleship.Logica
             }
             return ShipImg[size];
         }
-
-        
-
     }
 }

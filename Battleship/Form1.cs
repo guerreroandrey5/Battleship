@@ -26,6 +26,7 @@ namespace Battleship
         private Thread newThread;
         private bool juego = true;
         private Ship barco = new Ship();
+        private Ship aIm = new Ship();
         private Generador gen = new Generador();
         private Comprobador cbp = new Comprobador();
         private PictureBox panelactual;
@@ -38,14 +39,12 @@ namespace Battleship
         int Ax = 0;
         int Ay = 0;
         private int idx = 0;
+        Ship aimz;
         public BtlShip()
         {
             InitializeComponent();
             Empezar();
-            load();
         }
-
-    
 
         public void Thread_Run()
         {
@@ -60,20 +59,14 @@ namespace Battleship
                 {
                     throw;
                 }
-
-
             }
         }
+
         public void Empezar()
         {
-            /* label1.Parent = pictureBox1;
-              label1.BackColor = Color.Transparent;*/
-            /* PlnGame.BackgroundImage = (Image)imgMgn.ResizeImage(Image.FromFile(filePath + @"\Imagenes\mar.png"), PlnGame.Width, PlnGame.Height);
-             PlnGame2.BackgroundImage = (Image)imgMgn.ResizeImage(Image.FromFile(filePath + @"\Imagenes\mar.png"), PlnGame2.Width, PlnGame2.Height);*/
             actualizarPanel();
             Board campo1 =  gen.generarJuego(PlnGame, 50);
-            Board campo2 =  gen.generarJuego(PlnGame2, 30);
-            
+            Board campo2 =  gen.generarJuego(PlnGame2, 30);           
             panelactual = PlnGame;
             for (int i = 0; i < campo1.getCampo().GetLength(0); i++)
             {
@@ -91,49 +84,28 @@ namespace Battleship
                     PlnGame2.Controls.Add(label);
                 }
             }
-
             CampoJugadores.SetValue(campo1, 0);
             CampoJugadores.SetValue(campo2, 1);
-            //setFocusable(true);
-            //requestFocus();
-            //addKeyListener(this);
-            //SC.saveDirty();
             if (juego)
             {
                 threadDelegate = new ThreadStart(Thread_Run);
                 newThread = new Thread(threadDelegate);
                 newThread.Start();
             }
+        }
 
-        }
-        public void load()
-        {
-            string title = "Jugador 1";
-            string text = "Coloque sus Barcos en la posicion deseada";
-            MessageBox.Show(text, title);
-        }
         public void Finalizar()
         {
-            /* save.mLis();
-             ListAnt.setModel(save.AddModel);
-             SC.saveCleaned();
-             SC.setPerce(JLprc.getText());*/
             juego = false;
-            //PlnGame.removeAll();
-
         }
 
         public void Actualizar()
         {
-
             if (juego)
             {
                 if (status == 0)
                 {
-
                     barco = gen.generarBarcos(panelactual, idx);
-
-
                     if (!cbp.getCondS(barco))
                     {
                         gen.setBarco(barco, CampoJugadores[jugadorAct].getCampo(), 50);
@@ -180,7 +152,7 @@ namespace Battleship
                 {
                     repintarBarcos(50);
                     barco = gen.generarBarcos(panelactual, 6);
-                    gen.setBarco(barco, CampoJugadores[aimAct].getCampo(), 50);//este hay que retocarlo para que no se "sette" el barco como tal
+                    gen.setBarco(barco, CampoJugadores[aimAct].getCampo(), 50);
                     aim = 1;
                     status = 6;
                 }
@@ -194,34 +166,8 @@ namespace Battleship
                     repintarBarcos(50, barco);
                     status = 6;
                 }
-                /* int porcentaje = gen.CheckPolvo();
-                 JLprc.setText(String.valueOf(porcentaje) + "%");
-                 gen.getPosition(Robot, Mov, MovPers);
-                 MovPers = Mov;
-                 gen.comprobar(Robot, "Polvo");
-                 boolean game = gen.comprobar(Robot, "Obstaculos");
-                 if (game)
-                 {
-                     resetMovement();
-
-                 }
-
-                 if (porcentaje == 0)
-                 {
-                     JOptionPane.showMessageDialog(null, "¡El salon esta limpio!");
-                     snd.ReproducirSonidoyay();
-                     Finalizar();
-                *
-                 }*/
-
             }
-            /*if (((Robot.getX()) <= -10) || ((Robot.getY()) <= -30) || ((Robot.getY()) >= 350) || ((Robot.getX()) >= 370))
-            {
-                snd.ReproducirSonidono();
-                resetMovement();
-            }*/
         }
-
 
         private void repintarBarcos(int s ,Ship sp2 = null)
         {
@@ -232,7 +178,6 @@ namespace Battleship
                 {
                     setB(ship, s);
                 }
-
             }
             if (sp2 != null)
             {
@@ -245,17 +190,13 @@ namespace Battleship
             gen.setBarco(ship,  CampoJugadores[jugadorAct].getCampo(), size);
         }
 
+        #region Teclas
         private void Form1_KeyPress(object sender, KeyPressEventArgs e)
         {
             int tecla = e.KeyChar;
-
-            Console.WriteLine(tecla == 'w');
-
             switch (tecla)
             {
-
-                case 'w':
-                    
+                case 'w':                   
                         Ax = 0;
                         Ay = -1;
                     if (status == 1)
@@ -263,12 +204,11 @@ namespace Battleship
                         status = 2;
                     } else if (status == 6)
                     {
-                        status=7;
+                        status = 7;
                     }
-
                     break;
-                case 'a':
-                   
+
+                case 'a':                  
                         Ax = -1;
                         Ay = 0;
                     if (status == 1)
@@ -279,10 +219,9 @@ namespace Battleship
                     {
                         status = 7;
                     }
-
                     break;
-                case 's':
-                   
+
+                case 's':                  
                         Ax = 0;
                         Ay = 1;
                         if (status == 1)
@@ -293,10 +232,9 @@ namespace Battleship
                         {
                             status = 7;
                         }
-                    
-                    break;
-                case 'd':
-                  
+                        break;
+
+                case 'd':             
                         Ax = 1;
                         Ay = 0;
                         if (status == 1)
@@ -306,14 +244,13 @@ namespace Battleship
                         else if (status == 6)
                         {
                             status = 7;
-                        }
-
-                    
+                        }                   
                     break;
-                case 'r':
 
+                case 'r':
                     status = 3;
                     break;
+
                 case 'x':
                     string message = "Esta Seguro de Salir?";
                     string title = "Advertencia";
@@ -324,30 +261,31 @@ namespace Battleship
                         this.Close();
                     }
                     break;
+
                 case 'i':
                     string messag = "Esta Seguro de Iniciar la Partida?";
                     string titl = "Advertencia";
                     MessageBoxButtons button = MessageBoxButtons.YesNo;
                     DialogResult resul = MessageBox.Show(messag, titl, button, MessageBoxIcon.Warning);
                     if (resul == DialogResult.Yes)
-                    {                      
-                        status = 5;//Inicia la partida
+                    {
                         string messa = "Apunte a donde creas que se encuentra un barco enemigo";
                         string tit = "Atención";
-                        MessageBox.Show(messa, tit);                       
+                        MessageBox.Show(messa, tit);
+                        status = 5;//Inicia la partida                                             
                     }
                     break;
+
                 case ' ':
                     if (status == 1)
                     {
-
-                        Console.WriteLine("LA MAMADA MIJO");
+                        sP("setBoat");
                         cbp.setCondS(barco, jugadorAct);
                         if ((idx == barco.getBarcosTam() - 1) && (jugadorAct == 1))
                         {
                             repintarPanel(50);
                             CambiarJugador();
-                            status = 4;
+                            status = 4;                            
                         }
                         else
                         {
@@ -358,19 +296,33 @@ namespace Battleship
                             CambiarCambiarPanel();
                             gen.changeTam(50, CampoJugadores[jugadorAct].getCampo());
                             status = 0;
-                        }
+                        }                     
                     }
-
+                    if (aim == 1)
+                    {
+                        shoot();
+                    }
                     break;
             }
         }
+        #endregion
+        public void shoot()
+        {
+            //gen.setBarco(ship, CampoJugadores[jugadorAct].getCampo(), size);
+            aIm = gen.generarBarcos(panelactual, idx);
+            Ship ship = CampoJugadores[jugadorAct].Barcos[jugadorAct, 1];
+            string sh = ship.NBarco.ToString();
+            //if (aIm.ge == sh)
+            //{
+                sP("pium");
+            //}
+        }
+
         public void j2()
         {
             string titl = "Jugador 2";
             string tex = "Coloque sus Barcos en la posicion deseada";
             MessageBox.Show(tex, titl);
-            /*CampoJugadores.SetValue(gen.generarJuego(PlnGame2), 1);
-            panelactual = PlnGame2;*/
         }
 
         public void CambiarJugador()
@@ -391,19 +343,13 @@ namespace Battleship
         {
             for (int j = 0; j < CampoJugadores[jugadorAct].Barcos.GetLength(1); j++)
             {
-                Ship ship = CampoJugadores[jugadorAct].Barcos[jugadorAct, j];
-
-                
+                Ship ship = CampoJugadores[jugadorAct].Barcos[jugadorAct, j];              
                 if (ship != null)
                 {
                     CampoJugadores[jugadorAct].repintar(ship, s);
-                    Ship aim = CampoJugadores[aimAct].Barcos[jugadorAct, 6];
-                    //CampoJugadores[jugadorAct].repintar(ship, s);
+                    aimz = CampoJugadores[aimAct].Barcos[jugadorAct, 6];
                 }
             }
-
-              //  }
-            //}
             actualizarPanel();
         }
 
@@ -428,8 +374,7 @@ namespace Battleship
             if (PlnGame2.InvokeRequired)
             {
                 PlnGame2.Invoke(new MethodInvoker(delegate
-                {
-                   
+                {                  
                     PlnGame2.BackgroundImage = (Image)imgMgn.ResizeImage(Image.FromFile(filePath + @"\Imagenes\mar.png"), PlnGame2.Width, PlnGame2.Height);
                 }));
             }
@@ -441,8 +386,7 @@ namespace Battleship
 
         public void LimpiarPanel(int s)
         {
-               CampoJugadores[jugadorAct].GenerarCampo(s, null, CampoJugadores[jugadorAct].getCampo());
-               
+            CampoJugadores[jugadorAct].GenerarCampo(s, null, CampoJugadores[jugadorAct].getCampo());               
         }
 
         public void CambiarCambiarPanel()
@@ -458,9 +402,7 @@ namespace Battleship
                     PlnGame.Width = PlnGame2.Width;
                     PlnGame2.Height = height;
                     PlnGame2.Width = width;
-
                     repintarPanel(30);
-
                 }
                 else
                 {
@@ -470,47 +412,30 @@ namespace Battleship
                     PlnGame2.Width = PlnGame.Width;
                     PlnGame.Height = height;
                     PlnGame.Width = width;
-
                     repintarPanel(30);
                 }
-
                 CambiarJugador();
-
-                
                 idx = 0;
-
             }
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            string title = "Jugador 1";
+            string text = "Coloque sus Barcos en la posicion deseada";
+            MessageBox.Show(text, title);
         }
+
         private void PlnGame_Paint(object sender, PaintEventArgs e)
         {
 
         }
-        private void button1_Click(object sender, EventArgs e)
-        {
-            using (var soundPlayer = new SoundPlayer(filePath + @"\Sounds\hit.wav"))
-            {
-                soundPlayer.Play(); // can also use soundPlayer.PlaySync()
-            }
-        }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void sP(string audio)
         {
-            using (var soundPlayer = new SoundPlayer(filePath + @"\Sounds\pium.wav"))
+            using (var soundPlayer = new SoundPlayer(filePath + @"\Sounds\"+ audio +".wav"))
             {
-                soundPlayer.Play(); // can also use soundPlayer.PlaySync()
-            }
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            using (var soundPlayer = new SoundPlayer(filePath + @"\Sounds\explosion.wav"))
-            {
-                soundPlayer.Play(); // can also use soundPlayer.PlaySync()
+                soundPlayer.Play();
             }
         }
 
@@ -519,9 +444,4 @@ namespace Battleship
             this.Close();
         }
     }
-
-
-
-
-
 }

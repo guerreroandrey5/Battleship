@@ -8,7 +8,7 @@ namespace Battleship.Logica.Negociacion
 {
     internal class Comprobador
     {
-        
+
         public bool getCondS(Ship ship)
         {
             return ship.Setd;
@@ -20,6 +20,5 @@ namespace Battleship.Logica.Negociacion
 
             ship.setBarco(ship, ja, ship.NBarco);
         }
-
     }
 }

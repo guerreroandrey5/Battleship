@@ -25,6 +25,7 @@ namespace Battleship.Logica.Objetos
         {
             get { return barcos; }
         }
+
         public Board()
         {
             setformas();
@@ -37,6 +38,7 @@ namespace Battleship.Logica.Objetos
 
         private void setformas()
         {
+            #region Arrays
             int[,] array1 = { { 0, 0 }, { 1, 0 } };
             int[,] array2 = { { 0, 1 }, { 1, 1 }, { 2, 1 } };
             int[,] array3 = { { 0, 1 }, { 1, 1 }, { 2, 1 },{ 1, 0 } };
@@ -44,8 +46,8 @@ namespace Battleship.Logica.Objetos
             int[,] array5 = { { 0, 1 }, { 1, 1 }, { 2, 1 }, { 3, 1 }, { 4, 1 } };
             int[,] array6 = { { 0, 2 }, { 1, 2 }, { 2, 2 }, { 1, 1 }, { 2, 1 }, { 3, 1 } };
             int[,] array7 = { { 0, 0 } };
-            //string[] imagen1 = { 'C:\Users\Cris\Downloads\mar.png' };
-            //string[,] imagen2 = { { 0, 1 }, { 1, 1 }, { 2, 1 } };
+            #endregion
+            #region Matrices de Imagenes
             string[,] imagen1 = { { "L1", "L2" },
                                 { "90_L1", "90_L2" },
                                 { "180_L2", "180_L1" },
@@ -67,6 +69,8 @@ namespace Battleship.Logica.Objetos
             string[,] imagen6 = { { "PA1", "PA2", "PA3", "PA4", "PA5", "PA6" },
                                   { "R_PA1", "R_PA2", "R_PA3", "R_PA4", "R_PA5", "R_PA6" } };
             string[,] imagen7 = { { "crosshair" }};
+            #endregion
+            #region Declaraciones de Arrays e Imagenes
             formas[0] = array1;
             formas[1] = array2;
             formas[2] = array3;
@@ -82,6 +86,7 @@ namespace Battleship.Logica.Objetos
             imagesS[4] = imagen5;
             imagesS[5] = imagen6;
             imagesS[6] = imagen7;
+            #endregion
         }
 
         public int[,] getForma(int idn)
@@ -109,29 +114,22 @@ namespace Battleship.Logica.Objetos
                     setLabel(i, j,  "Mar", null, sizes, ca);
                 }
             }
-
-           /* return panel;*/
         }
 
-        public /*Panel*/ void setLabel(int x, int y, String status, Ship shp, int sL, Label[,] campoAC = null)
+        public void setLabel(int x, int y, String status, Ship shp, int sL, Label[,] campoAC = null)
         { //Coloca los labels en el panel de juego
             if (campoAC != null)
             {
                 campo = campoAC;
-            }
-            
+            }          
             switch (status)
             {
                 case "Mar":
                     if(campoAC == null)
                     {
-
                         campo[x, y] = new Label();
-
                     }
                     Console.WriteLine(filePath);
-                    //campo[x, y].Image = (Image)imgMgnt.ResizeImage(Image.FromFile(filePath + @"\Imagenes\mar.png"), 50, 50);
-                    //campo[x, y].Image = (Image)imgMgnt.ResizeImage(Image.FromFile(@"C:\Users\Cris\Downloads\mar.png"), 50, 50);              
                     break;
 
                 case "Barco":
@@ -145,42 +143,20 @@ namespace Battleship.Logica.Objetos
                             }
                     }                   
                     break;
+
                 case "Repintar":
                     int[,] ind = { { x, y } };
                     for (int i = 0; i < shp.getFormaAct().GetLength(0); i++)
                     {
                         if (shp.getFormaAct()[i, 0] == ind[0, 0] && shp.getFormaAct()[i, 1] == ind[0, 1])
                         {
-                            //campo[x, y].Image = (Image)imgMgnt.ResizeImage(Image.FromFile(@"C:\Users\Cris\Downloads\mar.png"), 50, 50);
                            campo[x, y].Image = null;
                         }
                     }
-
                     break;
             }
             campo[x, y].BackColor = Color.Transparent;
             cambiarTamLBL(x, y, sL);
-            /*if(panel != null)
-            {
-                campoAc[x, y].SetBounds(x * 50, y * 50, 50, 50);
-                try
-                {
-                    panel.Controls.Add(campoAc[x, y]);
-                }
-                catch (Exception)
-                {
-                    Thread form = new Thread(() =>
-                    {
-                        panel.Invoke((MethodInvoker)delegate { panel.Controls.Add(campoAc[x, y]); });
-
-                    });
-                    throw;
-                }
-                
-            }*/
-
-
-            // return panel;
         }
 
         public void cambiarTamLBL(int x, int y, int size, Label[,] c = null)
@@ -202,8 +178,6 @@ namespace Battleship.Logica.Objetos
             }
         }
 
-
-
         public Label[,] getCampo()
         {
             return campo;
@@ -217,7 +191,6 @@ namespace Battleship.Logica.Objetos
             {
                 arr[i] = mx[st,i];
             }
-
             return arr;
         }
 
@@ -230,6 +203,5 @@ namespace Battleship.Logica.Objetos
         {
             barcos[ja, idx] = sh;
         }
-
     }
 }

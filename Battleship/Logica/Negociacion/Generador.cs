@@ -10,9 +10,6 @@ namespace Battleship.Logica.Negociacion
 {
     internal class Generador
     {
-       
-        
-
         public Board generarJuego(PictureBox panel, int tam)
         {
             Board board = new Board(panel, tam);
@@ -23,19 +20,18 @@ namespace Battleship.Logica.Negociacion
         {
             Board board = new Board();
             Ship ship = new Ship(board.getImages(idx, 0),board.getForma(idx), board.getForma(idx), idx);
-            //board.setBarco(ship);
             return ship;
         }
 
         public void setBarco(Ship ship, Label[,] campo, int size)
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          {
+        {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
             for (int i = 0; i < ship.getFormaAct().GetLength(0); i++)
             {
                 int x = ship.getFormaAct()[i,0];
                 int y = ship.getFormaAct()[i, 1];
                 ship.setLabel(x,y, "Barco", ship, size , campo );
             }
-            }
+        }
 
         public void changeTam(int size, Label[,] campo)
         {
@@ -51,16 +47,12 @@ namespace Battleship.Logica.Negociacion
 
         public void getMovement(Ship ship, int x, int y)
         {
-            ship.repintar(ship, 50);
-            
+            ship.repintar(ship, 50);            
             ship.Mover(x,y);
-
-            //setBarco(ship, null);
         }
 
         public void Rotate(Ship ship, int rot)
-        {
-            
+        {           
             for (int i = 0; i < 10; i++)
             {
                 for (int j = 0; j < 10; j++)
@@ -76,7 +68,6 @@ namespace Battleship.Logica.Negociacion
                     rot = 0;
                 } 
             }
-
             ship.setOri(rot);
             ship.rotate(rot, Sbarco);
             setBarco(ship, null, 50);
