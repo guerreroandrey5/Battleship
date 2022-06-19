@@ -47,6 +47,8 @@ namespace Battleship
             Empezar();
             Console.WriteLine("puto el que lo lea");
             Console.WriteLine("desputo el que lo lea");
+            /* Empezar();*/
+            Console.WriteLine("dasd");
         }
 
         public void Thread_Run()
