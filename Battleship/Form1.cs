@@ -44,7 +44,8 @@ namespace Battleship
         public BtlShip()
         {
             InitializeComponent();
-            Empezar();
+            /* Empezar();*/
+            Console.WriteLine("dasd");
         }
 
         public void Thread_Run()
