@@ -64,6 +64,8 @@ namespace Battleship
         }
 
         public void Empezar()
+        /*Esta funcion tiene el proposito de iniciar el juego, 
+        inicializa y acutaliza los paneles de juegode cada jugador*/
         {
             actualizarPanel();
             Board campo1 =  gen.generarJuego(PlnGame, 50);
@@ -101,10 +103,13 @@ namespace Battleship
         }
 
         public void Actualizar()
+        /*Esta funcion es la que hace que le juego "corra", al moverse los barcos
+        los paneles deben ser actualizados para mostrar la nueva posicion de estos
+        Ademas de ser la que "setea" los barcos en sus posiciones*/
         {
             if (juego)
             {
-                if (status == 0)
+                if (status == 0)//Genera los barcos
                 {
                     barco = gen.generarBarcos(panelactual, idx);
                     if (!cbp.getCondS(barco))
@@ -114,11 +119,11 @@ namespace Battleship
                         idx++;
                     }
                 }
-                else if (status == 1)
+                else if (status == 1)//Genera el movimiento de los barcos
                 {
 
                 }
-                else if (status == 2)
+                else if (status == 2)//Genera la rotación de los barcos
                 {
                     gen.getMovement(barco, Ax, Ay);
                     repintarBarcos(50 , barco);
@@ -149,7 +154,7 @@ namespace Battleship
                 {
 
                 }
-                else if (status == 5)
+                else if (status == 5)//Se utiliza al iniciar la partida
                 {
                     repintarBarcos(30);
                     barco = gen.generarBarcos(panelactual, 6);
@@ -163,7 +168,7 @@ namespace Battleship
                 {
                    
                 }
-                else if (status == 7)
+                else if (status == 7)//Genera movimiento para los barcos del otro jugador
                 {
                     gen.getMovement(barco, Ax, Ay);
                     setB( barco, 50);
@@ -171,7 +176,7 @@ namespace Battleship
                 }
             }
         }
-        public void showLbl()
+        public void showLbl()//Funcion que muestra los labels del contador de barcos destruidos
         {
             if (LblBR.InvokeRequired)
             {
@@ -197,7 +202,7 @@ namespace Battleship
                 LblCbr.Show();
             }
         }
-        private void repintarBarcos(int s ,Ship sp2 = null)
+        private void repintarBarcos(int s ,Ship sp2 = null)//Funcion encargada de mostrar los barco en pantalla
         {
             for (int j = 0; j < CampoJugadores[jugadorAct].Barcos.GetLength(1); j++)
             {
@@ -219,12 +224,13 @@ namespace Battleship
         }
 
         #region Teclas
+        /*En esta region se encuentran los controles del juego*/
         private void Form1_KeyPress(object sender, KeyPressEventArgs e)
         {
             int tecla = e.KeyChar;
             switch (tecla)
             {
-                case 'w':                   
+                case 'w'://Mueve el barco una posicion arriba                     
                         Ax = 0;
                         Ay = -1;
                     if (status == 1)
@@ -236,7 +242,7 @@ namespace Battleship
                     }
                     break;
 
-                case 'a':                  
+                case 'a'://Mueve el barco una posicion a la izquierda                    
                         Ax = -1;
                         Ay = 0;
                     if (status == 1)
@@ -249,7 +255,7 @@ namespace Battleship
                     }
                     break;
 
-                case 's':                  
+                case 's'://Mueve el barco una posicion abajo                    
                         Ax = 0;
                         Ay = 1;
                         if (status == 1)
@@ -262,7 +268,7 @@ namespace Battleship
                         }
                         break;
 
-                case 'd':             
+                case 'd'://Mueve el barco una posicion a la derecha             
                         Ax = 1;
                         Ay = 0;
                         if (status == 1)
@@ -275,15 +281,15 @@ namespace Battleship
                         }                   
                     break;
 
-                case 'r':
-                    if(status == 1)
+                case 'r'://Rota el barco
+                    if (status == 1)
                     {
 
                         status = 3;
                     }
                     break;
 
-                case 'x':
+                case 'x'://Muestra un mensaje de advertencia, si este se acepta cierra el juego
                     string message = "Esta Seguro de Salir?";
                     string title = "Advertencia";
                     MessageBoxButtons buttons = MessageBoxButtons.YesNo;
@@ -294,7 +300,7 @@ namespace Battleship
                     }
                     break;
 
-                case 'i':
+                case 'i'://Muestra un mensaje de advertencia, si este se acepta, inicia la partida
                     string messag = "Esta Seguro de Iniciar la Partida?";
                     string titl = "Advertencia";
                     MessageBoxButtons button = MessageBoxButtons.YesNo;
@@ -308,7 +314,7 @@ namespace Battleship
                     }
                     break;
 
-                case ' ':
+                case ' '://Dispara/Coloca los barcos en la posicion deseada
                     if (status == 1)
                     {
                         bool cond = true;
@@ -365,7 +371,10 @@ namespace Battleship
         }
         #endregion
         public void shoot()
-        {            
+        /*Funcion que compara la posicion de la "mira" y los barcos en los paneles
+        Segun lo que retorne sonara un sonido de "disparo o un "splash" alertando
+        que fallo el tiro*/
+        {
             if (jugadorAct == 1)
             {
                 jA = 1;
@@ -389,7 +398,7 @@ namespace Battleship
                         if (cS.gethealth() == 0)
                         {
                             ded = true;
-                            //CampoJugadores[jugadorAct].setboatd(CampoJugadores[jugadorAct].getboatd() + 1);
+                            //CampoJugadores[jugadorAct].setboatd(CampoJugadores[jugadorAct].getboatd() + 1); //esta linea es la que cuenta los barcos destruidos
                             CampoJugadores[jugadorAct].setCbar(CampoJugadores[jugadorAct].getCbar() - 1);
                         }
                         break;
@@ -436,21 +445,21 @@ namespace Battleship
             }
         }
 
-        public void j2()
+        public void j2()//Un simple mensaje que alerta cuando es turno del segundo jugador
         {
             string titl = "Jugador 2";
             string tex = "Coloque sus Barcos en la posicion deseada";
             MessageBox.Show(tex, titl);
         }
 
-        public void j1()
+        public void j1()//Un simple mensaje que alerta cuando es turno del primer jugador
         {
             string title = "Jugador 1";
             string text = "Coloque sus Barcos en la posicion deseada";
             MessageBox.Show(text, title);
         }
 
-        public void CambiarJugador()
+        public void CambiarJugador()//Funcion que cambia los jugadores
         {
             if (jugadorAct == 1)
             {
@@ -477,7 +486,7 @@ namespace Battleship
             PlnGame.Show();
             PlnGame2.Show();
         }
-        public void repintarPanel(int s)
+        public void repintarPanel(int s)//Funcion que "repinta" los paneles de juego
         {
             for (int j = 0; j < CampoJugadores[jugadorAct].Barcos.GetLength(1); j++)
             {
@@ -491,7 +500,7 @@ namespace Battleship
             actualizarPanel();
         }
 
-        public void actualizarPanel()
+        public void actualizarPanel()//Funcion que actualiza los paneles de juego
         {
             PlnGame.Invalidate();
             PlnGame.Refresh();
@@ -522,12 +531,12 @@ namespace Battleship
             }
         }
 
-        public void LimpiarPanel(int s)
+        public void LimpiarPanel(int s)//Funcion que limpia los paneles al cambiar de jugador
         {
             CampoJugadores[jugadorAct].GenerarCampo(s, null, CampoJugadores[jugadorAct].getCampo());               
         }
 
-        public void CambiarCambiarPanel()
+        public void CambiarCambiarPanel()//Funcion que modifica el tamaño de los paneles de juego al cambiar de jugador
         {
             if (idx == barco.getBarcosTam() - 1 || status == 6)
             {
@@ -569,7 +578,7 @@ namespace Battleship
 
         }
 
-        private void sP(string audio)
+        private void sP(string audio)//Funcion que carga los sonidos segun el parametro que reciba
         {
             using (var soundPlayer = new SoundPlayer(filePath + @"\Sounds\"+ audio +".wav"))
             {
@@ -593,6 +602,7 @@ namespace Battleship
             {
                 loadTime.Stop();
                 PlnLoad.Hide();
+                //comente esto porque no estoy seguro si sea necesario, llega a ser molesto
                 //if (jugadorAct == 0)
                 //{
                 //    j1();

@@ -21,7 +21,7 @@ namespace Battleship.Logica.Negociacion
             ship.setBarco(ship, ja, ship.NBarco);
         }
 
-        public bool comprobrarChoque(Ship sh1, Ship sh2)
+        public bool comprobrarChoque(Ship sh1, Ship sh2)//Esta clase comprueba constantemente las posiciones de los barcos
         {
             int[,] coor1 = sh1.getFormaAct();
             int[,] coor2 = sh2.getFormaAct();

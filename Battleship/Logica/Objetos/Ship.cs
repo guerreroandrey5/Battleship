@@ -20,7 +20,7 @@ namespace Battleship.Logica
         public int size = -1;
         private int rotation = 0;
         private bool setd = false;
-        string filePath = Environment.CurrentDirectory;
+        string filePath = Environment.CurrentDirectory; //Variable comun de ciertas clases que funciona como ruta
         private int health = 0;
         public bool Setd
         {
@@ -41,7 +41,7 @@ namespace Battleship.Logica
 
         }
 
-        public Ship(string[] imgRL, int[,] pos, int[,] frm, int hel, int numB)
+        public Ship(string[] imgRL, int[,] pos, int[,] frm, int hel, int numB)//Declaracion del Objeto barco
         {
             this.NBarco = numB;
             setSIGs( imgRL );
@@ -56,7 +56,7 @@ namespace Battleship.Logica
             return setd;
         }
 
-        private void setSIGs(string[] imgRL)
+        private void setSIGs(string[] imgRL)//Asigna las imagenes a los barcos
         {
             ShipImg = new Image[imgRL.Length];
             for (int i = 0; i < imgRL.Length; i++)
@@ -77,10 +77,10 @@ namespace Battleship.Logica
             this.form = Fpos;
         }
 
-        #region Movimentos del Barco/Mira
-        
-        
+        #region Movimentos del Barco/Mira     
         public void Mover(int x, int y)
+        /*Verifica si se deben hacer, en caso de colisionar con 
+        los bordes el moviento no se realiza y emite un sonido*/
         {
             int[] movimientosX = new int[form.Length];
             int[] movimientosY = new int[form.Length];
@@ -111,7 +111,7 @@ namespace Battleship.Logica
             }
         }
 
-        private void moverBarco(int x, int y)
+        private void moverBarco(int x, int y)//Funcion de movimiento en si
         {
             for (int i = 0; i < (form.GetLength(0)); i++)
             {
@@ -150,6 +150,9 @@ namespace Battleship.Logica
 
         #region Rotar
         public void rotate(int rot, int frm)
+        /*Funcion de rotacion del barco, mediante calculos matematicos 
+        se verifican las nuevos posiciones que tendra el barco
+        Tambien las imagenes sufren estos cambios*/
         {
             int value1 = 0;
             int value2 = 0;
@@ -347,7 +350,7 @@ namespace Battleship.Logica
             }
         }
         #endregion  
-        public Image GetImage()
+        public Image GetImage()//Obtiene la imagen del barco para que pueda ser rotada
         {
 
             if (size < ((form.Length/2)-1))

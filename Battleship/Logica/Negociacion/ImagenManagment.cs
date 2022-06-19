@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 namespace Battleship.Logica.Negociacion
 {
     internal class ImagenManagment
+    /*Clase generica que modifica el tamano de las imagenes para que estas puedan ser redimensionadas
+    de forma correcta */
     {
         public ImagenManagment()
         {

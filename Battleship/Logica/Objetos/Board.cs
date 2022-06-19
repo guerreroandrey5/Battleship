@@ -55,6 +55,7 @@ namespace Battleship.Logica.Objetos
         }
 
         private void setformas()
+        /*Funcion que define arrays para las imagenes y las dimensiones que utlizaran*/
         {
             #region Arrays
             int[,] array1 = { { 0, 0 }, { 1, 0 } };
@@ -89,7 +90,8 @@ namespace Battleship.Logica.Objetos
             string[,] imagen6 = { { "PA1", "PA2", "PA3", "PA4", "PA5", "PA6" },
                                   { "R_PA1", "R_PA2", "R_PA3", "R_PA4", "R_PA5", "R_PA6" } };
             string[,] imagen7 = { { "crosshair" }};
-            #endregion
+            #endregion 
+            //Se definen los nombres de los archivos
             #region Declaraciones de Arrays e Imagenes
             formas[0] = array1;
             formas[1] = array2;
@@ -107,6 +109,7 @@ namespace Battleship.Logica.Objetos
             imagesS[5] = imagen6;
             imagesS[6] = imagen7;
             #endregion
+            //Se define los arrays correspondientes
         }
 
         public int[,] getForma(int idn)
@@ -179,7 +182,7 @@ namespace Battleship.Logica.Objetos
             cambiarTamLBL(x, y, sL);
         }
 
-        public void cambiarTamLBL(int x, int y, int size, Label[,] c = null)
+        public void cambiarTamLBL(int x, int y, int size, Label[,] c = null)//Modifica el tamaño de los labels
         {
             if (c!= null)
             {
@@ -203,7 +206,7 @@ namespace Battleship.Logica.Objetos
             return campo;
         }
 
-        public string[] getImages(int idx, int st)
+        public string[] getImages(int idx, int st)//Obtiene las imagenes de los arrays 
         {
             string[,] mx = imagesS[idx];
             string[] arr = new string[mx.GetLength(1)];
