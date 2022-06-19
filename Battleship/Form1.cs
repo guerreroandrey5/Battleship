@@ -32,6 +32,7 @@ namespace Battleship
         private PictureBox panelactual;
         private Board[]CampoJugadores = new Board[2];
         private int jugadorAct = 0;
+        private int jA = 0;
         private int aimAct = 0;
         protected int status = 0;
         protected int aim = 0;
@@ -151,7 +152,6 @@ namespace Battleship
                 else if (status == 5)
                 {
                     repintarBarcos(30);
-                    //CambiarJugador();
                     barco = gen.generarBarcos(panelactual, 6);
                     gen.setBarco(barco, CampoJugadores[aimAct].getCampo(), 50);
                     CambiarJugador();
@@ -278,7 +278,7 @@ namespace Battleship
                         string messa = "Apunte a donde creas que se encuentra un barco enemigo";
                         string tit = "Atención";
                         MessageBox.Show(messa, tit);
-                        status = 5;//Inicia la partida                                             
+                        status = 5;                                            
                     }
                     break;
 
@@ -332,15 +332,34 @@ namespace Battleship
         }
         #endregion
         public void shoot()
-        {
-            //gen.setBarco(ship, CampoJugadores[jugadorAct].getCampo(), size);
-            aIm = gen.generarBarcos(panelactual, idx);
-            Ship ship = CampoJugadores[jugadorAct].Barcos[jugadorAct, 1];
-            string sh = ship.NBarco.ToString();
-            //if (aIm.ge == sh)
-            //{
-                sP("pium");
-            //}
+        {            
+            if (jugadorAct == 1)
+            {
+                jA = 0;
+            }
+            if (jugadorAct == 0)
+            {
+                jA = 1;
+            }
+            bool cond = true;
+            for (int i = 0; i < CampoJugadores[jugadorAct].Barcos.GetLength(1); i++)
+            {
+                Ship cS = CampoJugadores[jugadorAct].Barcos[jA, i];
+                if (cS != null)
+                {
+                    aIm = gen.generarBarcos(panelactual, 1);
+                    cond = cbp.comprobrarChoque(barco, cS);
+                    if (!cond)
+                    {
+                        sP("pium");
+                        break;
+                    }
+                    if (cond)
+                    {
+                        sP("splash");
+                    }
+                }
+            }
         }
 
         public void j2()
