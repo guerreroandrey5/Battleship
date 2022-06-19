@@ -50,8 +50,8 @@ namespace Battleship.Logica.Objetos
             #region Matrices de Imagenes
             string[,] imagen1 = { { "L1", "L2" },
                                 { "90_L1", "90_L2" },
-                                { "180_L2", "180_L1" },
-                                { "270_L2", "270_L1" }};
+                                { "180_L1", "180_L2" },
+                                { "270_L1", "270_L2" }};
             string[,] imagen2 ={ { "LL1", "LL2","LL3" },
                                 { "90_LL1", "90_LL2","90_LL3" },
                                 { "180_LL1", "180_LL2","180_LL3" },
@@ -64,8 +64,10 @@ namespace Battleship.Logica.Objetos
                                 { "90_BG1", "90_BG2","90_BG3", "90_BG4" },
                                 { "180_BG1", "180_BG2","180_BG3", "180_BG4" },
                                 { "270_BG1", "270_BG2","270_BG3", "270_BG4" }};
-            string[,] imagen5 = { { "PA1", "PA2", "PA3", "PA4", "PA5" },
-                                  { "R_PA1", "R_PA2", "R_PA3", "R_PA4", "R_PA5" } };
+            string[,] imagen5 = { { "AC1", "AC2","AC3", "AC4", "AC5" },
+                                { "90_AC1", "90_AC2","90_AC3", "90_AC4", "90_AC5" },
+                                { "180_AC1", "180_AC2","180_AC3", "180_AC4", "180_AC5" },
+                                { "270_AC1", "270_AC2","270_AC3", "270_AC4", "270_AC5" }};
             string[,] imagen6 = { { "PA1", "PA2", "PA3", "PA4", "PA5", "PA6" },
                                   { "R_PA1", "R_PA2", "R_PA3", "R_PA4", "R_PA5", "R_PA6" } };
             string[,] imagen7 = { { "crosshair" }};
