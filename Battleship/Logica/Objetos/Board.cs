@@ -20,12 +20,30 @@ namespace Battleship.Logica.Objetos
         private ImagenManagment imgMgnt = new ImagenManagment();
         private int[][,] formas = new int[7][,];
         string filePath =  Directory.GetCurrentDirectory();
-
+        protected int cbar = 5;
+        protected int boatd = 0;
         public Ship[,] Barcos
         {
             get { return barcos; }
         }
 
+        public int getCbar()
+        {
+            return cbar; 
+        }
+        public void setCbar(int Cbar)
+        {
+            cbar = Cbar;
+        }
+        public void setboatd(int boat)
+        {
+            boatd = boat;
+        }
+        public int getboatd()
+        {
+            return boatd;
+        }
+      
         public Board()
         {
             setformas();

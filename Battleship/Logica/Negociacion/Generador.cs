@@ -19,7 +19,7 @@ namespace Battleship.Logica.Negociacion
         public Ship generarBarcos(PictureBox panel, int idx)
         {
             Board board = new Board();
-            Ship ship = new Ship(board.getImages(idx, 0),board.getForma(idx), board.getForma(idx), idx);
+            Ship ship = new Ship(board.getImages(idx, 0),board.getForma(idx), board.getForma(idx), 1, idx);            
             return ship;
         }
 

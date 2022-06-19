@@ -21,24 +21,34 @@ namespace Battleship.Logica
         private int rotation = 0;
         private bool setd = false;
         string filePath = Environment.CurrentDirectory;
+        private int health = 0;
         public bool Setd
         {
             get { return setd; }
             set { setd = value; }
         }
-        
+        public int gethealth()
+        {
+            return health;
+        }
+
+        public void sethealth(int healt)
+        {
+            health = healt;
+        }
         public Ship()
         {
 
         }
 
-        public Ship(string[] imgRL, int[,] pos, int[,] frm, int numB)
+        public Ship(string[] imgRL, int[,] pos, int[,] frm, int hel, int numB)
         {
             this.NBarco = numB;
             setSIGs( imgRL );
             this.formIni = new int[frm.GetLength(0), frm.GetLength(1)];
             Array.Copy(frm, 0, formIni, 0, frm.Length);
             setFormaAct(frm.Clone() as int[,]);
+            hel = getFormaAct().Length;
         }
 
         public bool checkSet()
@@ -54,7 +64,6 @@ namespace Battleship.Logica
                 string filePath = Environment.CurrentDirectory;
                 string url = imgRL[i];
                 this.ShipImg[i] = Image.FromFile(filePath + @"\Imagenes\" + url + ".png");
-
             }
         }
 
@@ -119,7 +128,8 @@ namespace Battleship.Logica
             return this.formIni;
         }
 
-        public bool isMoving_(){
+        public bool isMoving_()
+        {
             return move;
         }
 

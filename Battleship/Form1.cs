@@ -26,7 +26,6 @@ namespace Battleship
         private Thread newThread;
         private bool juego = true;
         private Ship barco = new Ship();
-        private Ship aIm = new Ship();
         private Generador gen = new Generador();
         private Comprobador cbp = new Comprobador();
         private PictureBox panelactual;
@@ -36,6 +35,7 @@ namespace Battleship
         private int aimAct = 0;
         protected int status = 0;
         protected int aim = 0;
+        protected int turnithing = 1;
         string filePath = Environment.CurrentDirectory;
         int Ax = 0;
         int Ay = 0;
@@ -155,6 +155,7 @@ namespace Battleship
                     barco = gen.generarBarcos(panelactual, 6);
                     gen.setBarco(barco, CampoJugadores[aimAct].getCampo(), 50);
                     CambiarJugador();
+                    showLbl();
                     aim = 1;
                     status = 6;
                 }
@@ -170,7 +171,32 @@ namespace Battleship
                 }
             }
         }
+        public void showLbl()
+        {
+            if (LblBR.InvokeRequired)
+            {
+                LblBR.Invoke(new MethodInvoker(delegate
+                {
+                    LblBR.Show();
+                }));
+            }
+            else
+            {
+                LblBR.Show();
+            }
 
+            if (LblCbr.InvokeRequired)
+            {
+                LblCbr.Invoke(new MethodInvoker(delegate
+                {
+                    LblCbr.Show();
+                }));
+            }
+            else
+            {
+                LblCbr.Show();
+            }
+        }
         private void repintarBarcos(int s ,Ship sp2 = null)
         {
             for (int j = 0; j < CampoJugadores[jugadorAct].Barcos.GetLength(1); j++)
@@ -291,8 +317,7 @@ namespace Battleship
                             Ship cS = CampoJugadores[jugadorAct].Barcos[jugadorAct, i];
                             if(cS!= null)
                             {
-
-                               // cond = cbp.comprobrarChoque(barco, cS);
+                                cond = cbp.comprobrarChoque(barco, cS);
                                 if (!cond)
                                 {
                                     sP("Uff");
@@ -303,19 +328,21 @@ namespace Battleship
                         if (cond)
                         {
                             sP("setBoat");
+                            barco.sethealth(barco.getFormaAct().Length/2);
                             cbp.setCondS(barco, jugadorAct);
                             if ((idx == barco.getBarcosTam() - 1) && (jugadorAct == 1))
                             {
                                 loadload();
                                 repintarPanel(50);
                                 CambiarJugador();
-                                status = 4;
+                                status = 4;                               
                             }
                             else
                             {
                                 if ((idx == barco.getBarcosTam() - 1))
                                 {
-                                    loadload();                                                                     
+                                    loadload();
+                                    j2();
                                 }
                                 CambiarCambiarPanel();
                                 gen.changeTam(50, CampoJugadores[jugadorAct].getCampo());
@@ -348,30 +375,64 @@ namespace Battleship
                 jA = 0;
             }
             bool cond = true;
+            bool ded = false;
             for (int i = 0; i < CampoJugadores[jugadorAct].Barcos.GetLength(1); i++)
             {
                 Ship cS = CampoJugadores[jugadorAct].Barcos[jA, i];
                 if (cS != null)
                 {
-                    aIm = gen.generarBarcos(panelactual, 1);
                     cond = cbp.comprobrarChoque(barco, cS);
-                    if (!cond)
+                    if ((!cond)&&(cS.gethealth() != 0))
                     {
+                        cS.sethealth(cS.gethealth() - 1);                       
                         sP("pium");
+                        if (cS.gethealth() == 0)
+                        {
+                            ded = true;
+                            //CampoJugadores[jugadorAct].setboatd(CampoJugadores[jugadorAct].getboatd() + 1);
+                            CampoJugadores[jugadorAct].setCbar(CampoJugadores[jugadorAct].getCbar() - 1);
+                        }
                         break;
                     }
                 }
             }
-            
+            if (ded)
+            {
+                sP("explosion");
+            }
             if (cond)
             {
                 sP("splash");
-
+                turnithing++;
+                loadload();
                 CambiarJugador();
                 repintarPanel(50);
                 CambiarCambiarPanel();
                 gen.changeTam(50, CampoJugadores[jugadorAct].getCampo());
                 status = 5;
+                if (Turnos.InvokeRequired)
+                {
+                    Turnos.Invoke(new MethodInvoker(delegate
+                    {
+                        Turnos.Text = turnithing.ToString();
+                    }));
+                }
+                else
+                {
+                    Turnos.Text = turnithing.ToString();
+                }
+
+                if (LblCbr.InvokeRequired)
+                {
+                    LblCbr.Invoke(new MethodInvoker(delegate
+                    { 
+                    LblCbr.Text = CampoJugadores[jugadorAct].getCbar().ToString();
+                    }));
+                }
+                else
+                {
+                    LblCbr.Text = CampoJugadores[jugadorAct].getCbar().ToString();
+                }
             }
         }
 
@@ -499,6 +560,8 @@ namespace Battleship
         private void Form1_Load(object sender, EventArgs e)
         {            
             PlnLoad.Hide();
+            LblBR.Hide();
+            LblCbr.Hide();
         }
 
         private void PlnGame_Paint(object sender, PaintEventArgs e)
@@ -530,14 +593,14 @@ namespace Battleship
             {
                 loadTime.Stop();
                 PlnLoad.Hide();
-                if (jugadorAct == 0)
-                {
-                    j1();
-                }
-                if (jugadorAct == 1)
-                {
-                    j2();
-                }
+                //if (jugadorAct == 0)
+                //{
+                //    j1();
+                //}
+                //if (jugadorAct == 1)
+                //{
+                //    j2();
+                //}
             }
         }
     }
