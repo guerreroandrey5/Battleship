@@ -292,7 +292,7 @@ namespace Battleship
                             if(cS!= null)
                             {
 
-                                cond = cbp.comprobrarChoque(barco, cS);
+                               // cond = cbp.comprobrarChoque(barco, cS);
                                 if (!cond)
                                 {
                                     sP("Uff");
@@ -341,11 +341,11 @@ namespace Battleship
         {            
             if (jugadorAct == 1)
             {
-                jA = 0;
+                jA = 1;
             }
             if (jugadorAct == 0)
             {
-                jA = 1;
+                jA = 0;
             }
             bool cond = true;
             for (int i = 0; i < CampoJugadores[jugadorAct].Barcos.GetLength(1); i++)
@@ -360,12 +360,18 @@ namespace Battleship
                         sP("pium");
                         break;
                     }
-                    if (cond)
-                    {
-                        sP("splash");
-                        CambiarCambiarPanel();
-                    }
                 }
+            }
+            
+            if (cond)
+            {
+                sP("splash");
+
+                CambiarJugador();
+                repintarPanel(50);
+                CambiarCambiarPanel();
+                gen.changeTam(50, CampoJugadores[jugadorAct].getCampo());
+                status = 5;
             }
         }
 
@@ -462,7 +468,7 @@ namespace Battleship
 
         public void CambiarCambiarPanel()
         {
-            if (idx == barco.getBarcosTam() - 1)
+            if (idx == barco.getBarcosTam() - 1 || status == 6)
             {
                 int height, width;
                 if (PlnGame.Width > PlnGame2.Width)
