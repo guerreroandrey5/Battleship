@@ -306,22 +306,22 @@ namespace Battleship
                             cbp.setCondS(barco, jugadorAct);
                             if ((idx == barco.getBarcosTam() - 1) && (jugadorAct == 1))
                             {
+                                loadload();
                                 repintarPanel(50);
                                 CambiarJugador();
                                 status = 4;
                             }
                             else
                             {
-                                if ((idx == barco.getBarcosTam()))
+                                if ((idx == barco.getBarcosTam() - 1))
                                 {
-                                    j2();
+                                    loadload();                                                                     
                                 }
                                 CambiarCambiarPanel();
                                 gen.changeTam(50, CampoJugadores[jugadorAct].getCampo());
                                 status = 0;
                             }
-                        }
-                                          
+                        }                                         
                     }
                     if (aim == 1)
                     {
@@ -329,6 +329,12 @@ namespace Battleship
                     }
                     break;
             }
+        }
+        public void loadload()
+        {
+            unload();
+            loadTime.Start();
+            load();
         }
         #endregion
         public void shoot()
@@ -357,6 +363,7 @@ namespace Battleship
                     if (cond)
                     {
                         sP("splash");
+                        CambiarCambiarPanel();
                     }
                 }
             }
@@ -367,6 +374,13 @@ namespace Battleship
             string titl = "Jugador 2";
             string tex = "Coloque sus Barcos en la posicion deseada";
             MessageBox.Show(tex, titl);
+        }
+
+        public void j1()
+        {
+            string title = "Jugador 1";
+            string text = "Coloque sus Barcos en la posicion deseada";
+            MessageBox.Show(text, title);
         }
 
         public void CambiarJugador()
@@ -385,6 +399,17 @@ namespace Battleship
             }
         }
 
+        public void unload()
+        {
+            PlnLoad.Show();
+            PlnGame.Hide();          
+            PlnGame2.Hide();
+        }
+        public void load()
+        {
+            PlnGame.Show();
+            PlnGame2.Show();
+        }
         public void repintarPanel(int s)
         {
             for (int j = 0; j < CampoJugadores[jugadorAct].Barcos.GetLength(1); j++)
@@ -466,10 +491,8 @@ namespace Battleship
         }
 
         private void Form1_Load(object sender, EventArgs e)
-        {
-            string title = "Jugador 1";
-            string text = "Coloque sus Barcos en la posicion deseada";
-            MessageBox.Show(text, title);
+        {            
+            PlnLoad.Hide();
         }
 
         private void PlnGame_Paint(object sender, PaintEventArgs e)
@@ -488,6 +511,28 @@ namespace Battleship
         private void BtlShip_FormClosed(object sender, FormClosedEventArgs e)
         {
             this.Close();
+        }
+
+        private void loadTime_Tick(object sender, EventArgs e)
+        {
+            if (pBar.Value < 100)
+            {
+                pBar.Value += 100;
+                LblLoad.Text = LblLoad.Text + " " + pBar.Value.ToString() + "%";
+            }
+            else
+            {
+                loadTime.Stop();
+                PlnLoad.Hide();
+                if (jugadorAct == 0)
+                {
+                    j1();
+                }
+                if (jugadorAct == 1)
+                {
+                    j2();
+                }
+            }
         }
     }
 }
