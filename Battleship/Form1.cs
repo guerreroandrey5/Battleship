@@ -151,10 +151,8 @@ namespace Battleship
                 else if (status == 5)
                 {
                     repintarBarcos(30);
-                    //CambiarJugador();
                     barco = gen.generarBarcos(panelactual, 6);
                     gen.setBarco(barco, CampoJugadores[aimAct].getCampo(), 50);
-                    CambiarJugador();
                     aim = 1;
                     status = 6;
                 }
@@ -165,7 +163,7 @@ namespace Battleship
                 else if (status == 7)
                 {
                     gen.getMovement(barco, Ax, Ay);
-                    setB( barco, 50);
+                    repintarBarcos(50, barco);
                     status = 6;
                 }
             }
@@ -250,11 +248,7 @@ namespace Battleship
                     break;
 
                 case 'r':
-                    if(status == 1)
-                    {
-
-                        status = 3;
-                    }
+                    status = 3;
                     break;
 
                 case 'x':
@@ -285,43 +279,24 @@ namespace Battleship
                 case ' ':
                     if (status == 1)
                     {
-                        bool cond = true;
-                        for (int i = 0; i < CampoJugadores[jugadorAct].Barcos.GetLength(1); i++)
+                        sP("setBoat");
+                        cbp.setCondS(barco, jugadorAct);
+                        if ((idx == barco.getBarcosTam() - 1) && (jugadorAct == 1))
                         {
-                            Ship cS = CampoJugadores[jugadorAct].Barcos[jugadorAct, i];
-                            if(cS!= null)
-                            {
-
-                                cond = cbp.comprobrarChoque(barco, cS);
-                                if (!cond)
-                                {
-                                    sP("Uff");
-                                    break;
-                                }
-                            }
+                            repintarPanel(50);
+                            CambiarJugador();
+                            status = 4;                            
                         }
-                        if (cond)
+                        else
                         {
-                            sP("setBoat");
-                            cbp.setCondS(barco, jugadorAct);
-                            if ((idx == barco.getBarcosTam() - 1) && (jugadorAct == 1))
+                            if ((idx == barco.getBarcosTam()))
                             {
-                                repintarPanel(50);
-                                CambiarJugador();
-                                status = 4;
+                                j2();
                             }
-                            else
-                            {
-                                if ((idx == barco.getBarcosTam()))
-                                {
-                                    j2();
-                                }
-                                CambiarCambiarPanel();
-                                gen.changeTam(50, CampoJugadores[jugadorAct].getCampo());
-                                status = 0;
-                            }
-                        }
-                                          
+                            CambiarCambiarPanel();
+                            gen.changeTam(50, CampoJugadores[jugadorAct].getCampo());
+                            status = 0;
+                        }                     
                     }
                     if (aim == 1)
                     {
@@ -356,13 +331,13 @@ namespace Battleship
             {
                 panelactual = PlnGame;
                 jugadorAct = 0;
-                aimAct = 1;
+                aimAct = 0;
             }
             else
             {
                 panelactual = PlnGame2;
                 jugadorAct = 1;
-                aimAct = 0;
+                aimAct = 1;
             }
         }
 
@@ -374,7 +349,7 @@ namespace Battleship
                 if (ship != null)
                 {
                     CampoJugadores[jugadorAct].repintar(ship, s);
-                    aimz = CampoJugadores[aimAct].Barcos[aimAct, 6];
+                    aimz = CampoJugadores[aimAct].Barcos[jugadorAct, 6];
                 }
             }
             actualizarPanel();

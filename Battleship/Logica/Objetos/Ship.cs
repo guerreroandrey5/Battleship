@@ -69,8 +69,6 @@ namespace Battleship.Logica
         }
 
         #region Movimentos del Barco/Mira
-        
-        
         public void Mover(int x, int y)
         {
             int[] movimientosX = new int[form.Length];
