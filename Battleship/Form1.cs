@@ -126,7 +126,7 @@ namespace Battleship
                 else if (status == 2)//Genera la rotación de los barcos
                 {
                     gen.getMovement(barco, Ax, Ay);
-                    repintarBarcos(50 , barco);
+                    repintarBarcos(50, barco);
                     status = 1;
                 }
                 else if (status == 3)
@@ -166,16 +166,32 @@ namespace Battleship
                 }
                 else if (status == 6)
                 {
-                   
+
                 }
                 else if (status == 7)//Genera movimiento para los barcos del otro jugador
                 {
                     gen.getMovement(barco, Ax, Ay);
-                    
-                   
+
+
                     repintarDamage(50);
                     setB(barco, 50);
                     status = 6;
+                }
+                else if (status == 8)
+                {
+                    int pg = 0;
+                    
+                    if (CampoJugadores[1].getboatd() >= 5)
+                    {
+                        pg = 2;
+                    }
+                    if (CampoJugadores[0].getboatd() >= 5)
+                    {
+                        pg = 1;
+                    }
+                    unload();
+                    pBar.Hide();
+                    LblLoad.Text = "El Ganador es el Jugador " + pg;
                 }
             }
         }
@@ -444,7 +460,7 @@ namespace Battleship
                         if (cS.gethealth() == 0)
                         {
                             ded = true;
-                            //CampoJugadores[jugadorAct].setboatd(CampoJugadores[jugadorAct].getboatd() + 1); //esta linea es la que cuenta los barcos destruidos
+                            CampoJugadores[jugadorAct].setboatd(CampoJugadores[jugadorAct].getboatd() + 1);
                             CampoJugadores[jugadorAct].setCbar(CampoJugadores[jugadorAct].getCbar() - 1);
                         }
                         gen.setFireLocation(fire, barco);
@@ -457,6 +473,9 @@ namespace Battleship
             if (ded)
             {
                 sP("explosion");
+            }
+            if (CampoJugadores[jugadorAct].getboatd() >= 6){
+                status = 8;
             }
             if (cond)
             {
@@ -486,12 +505,12 @@ namespace Battleship
                 {
                     LblCbr.Invoke(new MethodInvoker(delegate
                     { 
-                    LblCbr.Text = CampoJugadores[jugadorAct].getCbar().ToString();
+                    LblCbr.Text = CampoJugadores[jA].getCbar().ToString();
                     }));
                 }
                 else
                 {
-                    LblCbr.Text = CampoJugadores[jugadorAct].getCbar().ToString();
+                    LblCbr.Text = CampoJugadores[jA].getCbar().ToString();
                 }
             }
         }
