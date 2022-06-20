@@ -171,7 +171,10 @@ namespace Battleship
                 else if (status == 7)//Genera movimiento para los barcos del otro jugador
                 {
                     gen.getMovement(barco, Ax, Ay);
-                    setB( barco, 50);
+                    
+                   
+                    repintarDamage(50);
+                    setB(barco, 50);
                     status = 6;
                 }
             }
@@ -212,9 +215,25 @@ namespace Battleship
                     setB(ship, s);
                 }
             }
+            repintarDamage(s);
             if (sp2 != null)
             {
                 setB(sp2, s);
+            }
+        }
+
+        private void repintarDamage(int s)
+        {
+            for (int i = 0; i < CampoJugadores[jugadorAct].Disparos[jA].GetLength(0); i++)
+            {
+                for (int j = 0; j < CampoJugadores[jugadorAct].Disparos[jA].GetLength(1); j++)
+                {
+                    Ship fuego = CampoJugadores[jugadorAct].Disparos[jA][i, j];
+                    if (fuego != null)
+                    {
+                        gen.setFire(fuego, CampoJugadores[jugadorAct].getCampo(),s, barco,  jA);
+                    }
+                }
             }
         }
 
@@ -358,7 +377,33 @@ namespace Battleship
                     }
                     if (aim == 1)
                     {
-                        shoot();
+                        bool shootC = true;
+                        for (int i = 0; i < CampoJugadores[jugadorAct].Disparos[jugadorAct].GetLength(0); i++)
+                        {
+                            for (int j = 0; j < CampoJugadores[jugadorAct].Disparos[jugadorAct].GetLength(1); j++)
+                            {
+                                Ship fuego = CampoJugadores[jugadorAct].Disparos[jugadorAct][i, j];
+                                if (fuego != null)
+                                {
+                                    shootC = cbp.comprobrarChoque(barco, fuego);
+                                }
+                                
+                                if (!shootC)
+                                {
+                                    break;
+                                }
+                            }
+                            if (!shootC)
+                            {
+                                break;
+                            }
+
+
+                        }
+                        if(shootC)
+                        {
+                            shoot();
+                        }
                     }
                     break;
             }
@@ -375,6 +420,7 @@ namespace Battleship
         Segun lo que retorne sonara un sonido de "disparo o un "splash" alertando
         que fallo el tiro*/
         {
+            Ship fire = gen.generarBarcos(panelactual, 6);
             if (jugadorAct == 1)
             {
                 jA = 1;
@@ -401,6 +447,9 @@ namespace Battleship
                             //CampoJugadores[jugadorAct].setboatd(CampoJugadores[jugadorAct].getboatd() + 1); //esta linea es la que cuenta los barcos destruidos
                             CampoJugadores[jugadorAct].setCbar(CampoJugadores[jugadorAct].getCbar() - 1);
                         }
+                        gen.setFireLocation(fire, barco);
+                        gen.setFire(fire, CampoJugadores[jugadorAct].getCampo(), 50, barco, jA);
+                        fire.setFire(fire, jA);
                         break;
                     }
                 }
@@ -414,9 +463,11 @@ namespace Battleship
                 sP("splash");
                 turnithing++;
                 loadload();
+                
                 CambiarJugador();
                 repintarPanel(50);
                 CambiarCambiarPanel();
+                ocultarMira(30);
                 gen.changeTam(50, CampoJugadores[jugadorAct].getCampo());
                 status = 5;
                 if (Turnos.InvokeRequired)
@@ -494,9 +545,20 @@ namespace Battleship
                 if (ship != null)
                 {
                     CampoJugadores[jugadorAct].repintar(ship, s);
-                    aimz = CampoJugadores[aimAct].Barcos[aimAct, 6];
                 }
             }
+            
+            actualizarPanel();
+        }
+
+        public void ocultarMira(int s)//Funcion que "repinta" los paneles de juego
+        {
+            
+                if (barco != null)
+                {
+                    CampoJugadores[jugadorAct].repintar(barco, s);
+                }
+            
             actualizarPanel();
         }
 

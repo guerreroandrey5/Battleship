@@ -33,6 +33,24 @@ namespace Battleship.Logica.Negociacion
             }
         }
 
+        public void setFireLocation(Ship ship, Ship mira)
+        {
+            int[,] nw = new int[mira.getFormaAct().GetLength(0), mira.getFormaAct().GetLength(1)];
+            Array.Copy(mira.getFormaAct(), nw, mira.getFormaAct().Length);
+            ship.setFormaAct(nw);
+        }
+        public void setFire(Ship ship, Label[,] campo, int size, Ship mira, int jA)//Funcion Genera la posicion de los barcos
+        {
+            
+            for (int i = 0; i < ship.getFormaAct().GetLength(0); i++)
+            {
+                int x = ship.getFormaAct()[i, 0];
+                int y = ship.getFormaAct()[i, 1];
+                ship.setLabel(x, y, "Fuego", ship, size, campo);
+            }
+           
+        }
+
         public void changeTam(int size, Label[,] campo)//Funcion que aunmenta el tamano de la zona de juego
         {
             Board br = new Board();

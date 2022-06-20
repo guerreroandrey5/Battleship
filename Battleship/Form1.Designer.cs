@@ -65,9 +65,9 @@
             // 
             this.PlnLoad.Controls.Add(this.pBar);
             this.PlnLoad.Controls.Add(this.LblLoad);
-            this.PlnLoad.Location = new System.Drawing.Point(2, 4);
+            this.PlnLoad.Location = new System.Drawing.Point(2, 12);
             this.PlnLoad.Name = "PlnLoad";
-            this.PlnLoad.Size = new System.Drawing.Size(1328, 519);
+            this.PlnLoad.Size = new System.Drawing.Size(1328, 511);
             this.PlnLoad.TabIndex = 7;
             // 
             // pBar
@@ -81,11 +81,11 @@
             // 
             this.LblLoad.AutoSize = true;
             this.LblLoad.BackColor = System.Drawing.Color.Transparent;
-            this.LblLoad.Font = new System.Drawing.Font("JetBrains Mono", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LblLoad.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LblLoad.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.LblLoad.Location = new System.Drawing.Point(545, 255);
             this.LblLoad.Name = "LblLoad";
-            this.LblLoad.Size = new System.Drawing.Size(120, 21);
+            this.LblLoad.Size = new System.Drawing.Size(91, 20);
             this.LblLoad.TabIndex = 0;
             this.LblLoad.Text = "Cargando...";
             // 
@@ -97,11 +97,11 @@
             // LblCT
             // 
             this.LblCT.AutoSize = true;
-            this.LblCT.Font = new System.Drawing.Font("JetBrains Mono", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LblCT.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LblCT.ForeColor = System.Drawing.Color.Silver;
             this.LblCT.Location = new System.Drawing.Point(518, 12);
             this.LblCT.Name = "LblCT";
-            this.LblCT.Size = new System.Drawing.Size(180, 19);
+            this.LblCT.Size = new System.Drawing.Size(141, 18);
             this.LblCT.TabIndex = 2;
             this.LblCT.Text = "Cantidad de Turnos:\r\n";
             // 
@@ -109,11 +109,11 @@
             // 
             this.Turnos.AutoSize = true;
             this.Turnos.BackColor = System.Drawing.Color.Transparent;
-            this.Turnos.Font = new System.Drawing.Font("JetBrains Mono", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Turnos.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Turnos.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.Turnos.Location = new System.Drawing.Point(704, 12);
             this.Turnos.Name = "Turnos";
-            this.Turnos.Size = new System.Drawing.Size(20, 21);
+            this.Turnos.Size = new System.Drawing.Size(18, 20);
             this.Turnos.TabIndex = 2;
             this.Turnos.Text = "1";
             // 
@@ -121,22 +121,22 @@
             // 
             this.LblCbr.AutoSize = true;
             this.LblCbr.BackColor = System.Drawing.Color.Transparent;
-            this.LblCbr.Font = new System.Drawing.Font("JetBrains Mono", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LblCbr.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LblCbr.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.LblCbr.Location = new System.Drawing.Point(704, 48);
             this.LblCbr.Name = "LblCbr";
-            this.LblCbr.Size = new System.Drawing.Size(20, 21);
+            this.LblCbr.Size = new System.Drawing.Size(18, 20);
             this.LblCbr.TabIndex = 8;
             this.LblCbr.Text = "5";
             // 
             // LblBR
             // 
             this.LblBR.AutoSize = true;
-            this.LblBR.Font = new System.Drawing.Font("JetBrains Mono", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LblBR.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LblBR.ForeColor = System.Drawing.Color.Silver;
             this.LblBR.Location = new System.Drawing.Point(518, 48);
             this.LblBR.Name = "LblBR";
-            this.LblBR.Size = new System.Drawing.Size(162, 19);
+            this.LblBR.Size = new System.Drawing.Size(131, 18);
             this.LblBR.TabIndex = 9;
             this.LblBR.Text = "Barcos Restantes:\r\n";
             // 
