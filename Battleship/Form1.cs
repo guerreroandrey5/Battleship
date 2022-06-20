@@ -160,6 +160,7 @@ namespace Battleship
                     barco = gen.generarBarcos(panelactual, 6);
                     gen.setBarco(barco, CampoJugadores[aimAct].getCampo(), 50);
                     CambiarJugador();
+                    repintarDamage(50);
                     showLbl();
                     aim = 1;
                     status = 6;
@@ -393,9 +394,11 @@ namespace Battleship
                                 if ((idx == barco.getBarcosTam() - 1))
                                 {
                                     loadload();
+                                    CambiarJugador();
                                     j2();
                                 }
                                 CambiarCambiarPanel();
+                                
                                 gen.changeTam(50, CampoJugadores[jugadorAct].getCampo());
                                 status = 0;
                             }
@@ -404,11 +407,11 @@ namespace Battleship
                     if (aim == 1)
                     {
                         bool shootC = true;
-                        for (int i = 0; i < CampoJugadores[jugadorAct].Disparos[jugadorAct].GetLength(0); i++)
+                        for (int i = 0; i < CampoJugadores[jugadorAct].Disparos[aimAct].GetLength(0); i++)
                         {
-                            for (int j = 0; j < CampoJugadores[jugadorAct].Disparos[jugadorAct].GetLength(1); j++)
+                            for (int j = 0; j < CampoJugadores[jugadorAct].Disparos[aimAct].GetLength(1); j++)
                             {
-                                Ship fuego = CampoJugadores[jugadorAct].Disparos[jugadorAct][i, j];
+                                Ship fuego = CampoJugadores[jugadorAct].Disparos[aimAct][i, j];
                                 if (fuego != null)
                                 {
                                     shootC = cbp.comprobrarChoque(barco, fuego);
@@ -431,7 +434,7 @@ namespace Battleship
                             Ship fire = gen.generarBarcos(panelactual, 6);
                             gen.setFireLocation(fire, barco);
                             gen.setFire(fire, CampoJugadores[jugadorAct].getCampo(), 50, barco, aimAct);
-                            fire.setFire(fire, jA);
+                            fire.setFire(fire, aimAct);
                             shoot();
                         }
                     }
@@ -460,10 +463,11 @@ namespace Battleship
                 jA = 1;
             }
             bool cond = true;
+            bool cond2 = true;
             bool ded = false;
             for (int i = 0; i < CampoJugadores[jugadorAct].Barcos.GetLength(1); i++)
             {
-                Ship cS = CampoJugadores[jugadorAct].Barcos[jA, i];
+                Ship cS = CampoJugadores[jugadorAct].Barcos[jugadorAct, i];
                 if (cS != null)
                 {
                     cond = cbp.comprobrarChoque(barco, cS);
@@ -475,11 +479,18 @@ namespace Battleship
                         {
                             ded = true;
                             CampoJugadores[jugadorAct].setboatd(CampoJugadores[jugadorAct].getboatd() + 1);
-
                             CampoJugadores[jA].setCbar(CampoJugadores[jA].getCbar() - 1);
+                            cond2 = false;
+                            break;
+                        } else
+                        {
+                            cond2 = false;
+                            break;
                         }
-                        
-                        break;
+
+                    } else
+                    {
+                        cond2 = true;
                     }
                 }
             }
@@ -490,16 +501,18 @@ namespace Battleship
             if (CampoJugadores[jugadorAct].getboatd() >= 6){
                 status = 8;
             }
-            if (cond)
+            if (cond2)
             {
                 sP("splash");
                 turnithing++;
                 loadload();
-                
+
                 CambiarJugador();
-               
+
                 repintarPanel(50);
                 CambiarCambiarPanel();
+                CambiarJugador();
+
                 ocultarMira(30);
                 gen.changeTam(50, CampoJugadores[jugadorAct].getCampo());
                 
@@ -675,7 +688,7 @@ namespace Battleship
                     PlnGame.Width = width;
                     repintarPanel(30);
                 }
-                CambiarJugador();
+                //CambiarJugador();
 
                 idx = 0;
             }
