@@ -44,7 +44,7 @@ namespace Battleship
         public BtlShip()
         {
             InitializeComponent();
-            Empezar();
+            //Empezar();
         }
 
         public void Thread_Run()
