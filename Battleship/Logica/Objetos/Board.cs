@@ -17,12 +17,15 @@ namespace Battleship.Logica.Objetos
         private static int tam = 7;
         private static Ship[,] barcos = new Ship[2, tam];
         private static Ship[][,] disparos = new Ship[2][,];
+        private static Ship[,] disparos1  = new Ship[10,10];
+        private static Ship[,] disparos2 = new Ship[10, 10];
         protected static string[][,] imagesS = new string[7][,];
         private ImagenManagment imgMgnt = new ImagenManagment();
         private int[][,] formas = new int[7][,];
         string filePath =  Directory.GetCurrentDirectory();
         protected int cbar = 5;
         protected int boatd = 0;
+        private static bool initiated = false;
         public Ship[,] Barcos
         {
             get { return barcos; }
@@ -99,8 +102,9 @@ namespace Battleship.Logica.Objetos
             //Se definen los nombres de los archivos
             #region Declaraciones de Arrays e Imagenes
 
-            disparos[0] = new Ship[10, 10];
-            disparos[1] = new Ship[10, 10];
+            disparos[0] = disparos1;
+            disparos[1] = disparos2;
+
             formas[0] = array1;
             formas[1] = array2;
             formas[2] = array3;
@@ -247,22 +251,18 @@ namespace Battleship.Logica.Objetos
             barcos[ja, idx] = sh;
         }
         public void setFire(Ship sh, int ja)
-        {
+         { 
+            
             bool cond = true;
             for (int i = 0; i < disparos[ja].GetLength(0); i++)
             {
                 for (int j = 0; j < disparos[ja].GetLength(1); j++)
                 {
-                    if (disparos[ja][i,j] == null)
+                    if (disparos[ja][i,j] == null && cond)
                     {
                         disparos[ja][i, j] = sh;
                         cond = false;
-                        break;
                     }
-                }
-                if (!cond)
-                {
-                    break;
                 }
             }
         }

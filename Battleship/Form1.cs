@@ -240,14 +240,24 @@ namespace Battleship
 
         private void repintarDamage(int s)
         {
-            for (int i = 0; i < CampoJugadores[jugadorAct].Disparos[jA].GetLength(0); i++)
+            int jc = 0;
+            if (jugadorAct == 0)
             {
-                for (int j = 0; j < CampoJugadores[jugadorAct].Disparos[jA].GetLength(1); j++)
+                jc = 1;
+            }
+            else
+            {
+                jc = 0;
+            }
+            for (int i = 0; i < CampoJugadores[jugadorAct].Disparos[jc].GetLength(0); i++)
+            {
+                for (int j = 0; j < CampoJugadores[jugadorAct].Disparos[jc].GetLength(1); j++)
                 {
-                    Ship fuego = CampoJugadores[jugadorAct].Disparos[jA][i, j];
+                    Ship fuego = CampoJugadores[jugadorAct].Disparos[jc][i, j];
                     if (fuego != null)
                     {
-                        gen.setFire(fuego, CampoJugadores[jugadorAct].getCampo(),s, barco,  jA);
+                        
+                        gen.setFire(fuego, CampoJugadores[jugadorAct].getCampo(),s, barco,  jc);
                     }
                 }
             }
@@ -418,6 +428,10 @@ namespace Battleship
                         }
                         if(shootC)
                         {
+                            Ship fire = gen.generarBarcos(panelactual, 6);
+                            gen.setFireLocation(fire, barco);
+                            gen.setFire(fire, CampoJugadores[jugadorAct].getCampo(), 50, barco, aimAct);
+                            fire.setFire(fire, jA);
                             shoot();
                         }
                     }
@@ -436,7 +450,7 @@ namespace Battleship
         Segun lo que retorne sonara un sonido de "disparo o un "splash" alertando
         que fallo el tiro*/
         {
-            Ship fire = gen.generarBarcos(panelactual, 6);
+            
             if (jugadorAct == 1)
             {
                 jA = 0;
@@ -464,9 +478,7 @@ namespace Battleship
 
                             CampoJugadores[jA].setCbar(CampoJugadores[jA].getCbar() - 1);
                         }
-                        gen.setFireLocation(fire, barco);
-                        gen.setFire(fire, CampoJugadores[jugadorAct].getCampo(), 50, barco, jA);
-                        fire.setFire(fire, jA);
+                        
                         break;
                     }
                 }
@@ -485,10 +497,12 @@ namespace Battleship
                 loadload();
                 
                 CambiarJugador();
+               
                 repintarPanel(50);
                 CambiarCambiarPanel();
                 ocultarMira(30);
                 gen.changeTam(50, CampoJugadores[jugadorAct].getCampo());
+                
                 status = 5;
                 if (Turnos.InvokeRequired)
                 {
@@ -662,6 +676,7 @@ namespace Battleship
                     repintarPanel(30);
                 }
                 CambiarJugador();
+
                 idx = 0;
             }
         }
