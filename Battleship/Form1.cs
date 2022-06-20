@@ -439,11 +439,11 @@ namespace Battleship
             Ship fire = gen.generarBarcos(panelactual, 6);
             if (jugadorAct == 1)
             {
-                jA = 1;
+                jA = 0;
             }
             if (jugadorAct == 0)
             {
-                jA = 0;
+                jA = 1;
             }
             bool cond = true;
             bool ded = false;
@@ -461,7 +461,8 @@ namespace Battleship
                         {
                             ded = true;
                             CampoJugadores[jugadorAct].setboatd(CampoJugadores[jugadorAct].getboatd() + 1);
-                            CampoJugadores[jugadorAct].setCbar(CampoJugadores[jugadorAct].getCbar() - 1);
+
+                            CampoJugadores[jA].setCbar(CampoJugadores[jA].getCbar() - 1);
                         }
                         gen.setFireLocation(fire, barco);
                         gen.setFire(fire, CampoJugadores[jugadorAct].getCampo(), 50, barco, jA);
@@ -500,18 +501,36 @@ namespace Battleship
                 {
                     Turnos.Text = turnithing.ToString();
                 }
+                if (jugadorAct == 1)
+                {
+                    if (LblCbr.InvokeRequired)
+                    {
+                        LblCbr.Invoke(new MethodInvoker(delegate
+                        {
+                            LblCbr.Text = CampoJugadores[1].getCbar().ToString();
+                        }));
+                    }
+                    else
+                    {
+                        LblCbr.Text = CampoJugadores[1].getCbar().ToString();
+                    }
+                }
 
-                if (LblCbr.InvokeRequired)
+                if (jugadorAct == 0)
                 {
-                    LblCbr.Invoke(new MethodInvoker(delegate
-                    { 
-                    LblCbr.Text = CampoJugadores[jA].getCbar().ToString();
-                    }));
+                    if (LblCbr.InvokeRequired)
+                    {
+                        LblCbr.Invoke(new MethodInvoker(delegate
+                        {
+                            LblCbr.Text = CampoJugadores[0].getCbar().ToString();
+                        }));
+                    }
+                    else
+                    {
+                        LblCbr.Text = CampoJugadores[0].getCbar().ToString();
+                    }
                 }
-                else
-                {
-                    LblCbr.Text = CampoJugadores[jA].getCbar().ToString();
-                }
+
             }
         }
 
